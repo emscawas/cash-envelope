@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7CD689;
+    padding: 0 2rem;
+}
+
+.date {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+    /* border: 2px solid black; */
+}
