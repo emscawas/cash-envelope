@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./body.css";
+import Divider from "../Utils/divider";
 
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
@@ -46,7 +47,35 @@ function BudgetPlanner() {
           <span className="percentage-placeholder">Percentage</span>
         </div>
       </form>
-      {/* another component after this for list of budgets allocated */}
+      <Divider pixel="3" />
+      {/* component for list of budgets allocated */}
+      <div className="lists-container">
+        <div className="list-item">
+          <div className="list-item-title">Rent</div>
+          <div className="list-item-amount">$1,000</div>
+        </div>
+        <div className="list-item">
+          <div className="list-item-title">Groceries</div>
+          <div className="list-item-amount">$200</div>
+        </div>
+        <div className="list-item">
+          <div className="list-item-title">Utilities</div>
+          <div className="list-item-amount">$100</div>
+        </div>
+        <div className="list-item">
+          <div className="list-item-title">Transportation</div>
+          <div className="list-item-amount">$100</div>
+        </div>
+        <div className="list-item">
+          <div className="list-item-title">Entertainment</div>
+          <div className="list-item-amount">$100</div>
+        </div>
+        <div className="list-item">
+          <div className="list-item-title">Miscellaneous</div>
+          <div className="list-item-amount">$100</div>
+        </div>
+      </div>
+      {/* component for footer */}
     </div>
   );
 }
