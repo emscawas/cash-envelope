@@ -4,7 +4,7 @@ import Divider from "../Utils/divider";
 
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
-  const [percentage, setPercentage] = useState("");
+  const [needsPercentage, setNeedsPercentage] = useState("50");
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, "");
@@ -13,11 +13,17 @@ function BudgetPlanner() {
     }
   };
 
-  const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNeedsPercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/%/g, '');
     if (!isNaN(Number(value)) && Number(value) <= 100 || value === '') {
-      setPercentage(value);
+      setNeedsPercentage(value);
     }
+  };
+
+  const calculateTotalNeeds = () => {
+    const totalIncome = Number(income.replace(/,/g, ''));
+    const needsPercentageValue = Number(needsPercentage.replace(/%/g, '')) / 100;
+    return totalIncome * needsPercentageValue;
   };
 
   return (
@@ -35,16 +41,16 @@ function BudgetPlanner() {
           />
           <span className="income-placeholder">Total Income</span>
         </div>
-        <div className="percentage-container">
+        <div className="needs-percentage-container">
           <input
             type="text"
-            className="percentage-text"
+            className="needs-percentage-text"
             placeholder=""
-            value={percentage}
-            onChange={handlePercentageChange}
+            value={needsPercentage}
+            onChange={handleNeedsPercentageChange}
             maxLength={3}
           />
-          <span className="percentage-placeholder">Percentage</span>
+          <span className="needs-percentage-placeholder">Percentage</span>
         </div>
       </form>
       <Divider pixel="3" />
@@ -75,7 +81,15 @@ function BudgetPlanner() {
           <div className="list-item-amount">$100</div>
         </div>
       </div>
+      <Divider pixel="3" />
       {/* component for footer */}
+      <div className="footer">
+        <div className="dl-buttons"></div>
+        <div className="total-texts">
+          <span className="total-needs">{calculateTotalNeeds()}</span>
+          <span className="needs-total-budget">Total:</span>
+        </div>
+      </div>
     </div>
   );
 }
