@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./body.css";
 import Divider from "../Utils/divider";
+import NeedsLists from "./lists/needs";
 
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
@@ -13,16 +14,19 @@ function BudgetPlanner() {
     }
   };
 
-  const handleNeedsPercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/%/g, '');
-    if (!isNaN(Number(value)) && Number(value) <= 100 || value === '') {
+  const handleNeedsPercentageChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value.replace(/%/g, "");
+    if ((!isNaN(Number(value)) && Number(value) <= 100) || value === "") {
       setNeedsPercentage(value);
     }
   };
 
   const calculateTotalNeeds = () => {
-    const totalIncome = Number(income.replace(/,/g, ''));
-    const needsPercentageValue = Number(needsPercentage.replace(/%/g, '')) / 100;
+    const totalIncome = Number(income.replace(/,/g, ""));
+    const needsPercentageValue =
+      Number(needsPercentage.replace(/%/g, "")) / 100;
     return totalIncome * needsPercentageValue;
   };
 
@@ -55,31 +59,8 @@ function BudgetPlanner() {
       </form>
       <Divider pixel="3" />
       {/* component for list of budgets allocated */}
-      <div className="lists-container">
-        <div className="list-item">
-          <div className="list-item-title">Rent</div>
-          <div className="list-item-amount">$1,000</div>
-        </div>
-        <div className="list-item">
-          <div className="list-item-title">Groceries</div>
-          <div className="list-item-amount">$200</div>
-        </div>
-        <div className="list-item">
-          <div className="list-item-title">Utilities</div>
-          <div className="list-item-amount">$100</div>
-        </div>
-        <div className="list-item">
-          <div className="list-item-title">Transportation</div>
-          <div className="list-item-amount">$100</div>
-        </div>
-        <div className="list-item">
-          <div className="list-item-title">Entertainment</div>
-          <div className="list-item-amount">$100</div>
-        </div>
-        <div className="list-item">
-          <div className="list-item-title">Miscellaneous</div>
-          <div className="list-item-amount">$100</div>
-        </div>
+      <div className="lists-tracker">
+        <NeedsLists />
       </div>
       <Divider pixel="3" />
       {/* component for footer */}
