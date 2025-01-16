@@ -48,7 +48,7 @@
   }
   
   .modal-content {
-    background-color: #fefefe;
+    background-color: #D9D9D9;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
@@ -69,4 +69,14 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  /* needs list part */
+  .needs-item {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #7CD689;
   }
