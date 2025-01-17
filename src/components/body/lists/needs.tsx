@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./needs.css";
+import Divider from "../../Utils/divider";
 
 interface NeedItem {
   budget: string;
@@ -72,37 +73,48 @@ function NeedsLists() {
               <span className="close-button" onClick={handleCloseModal}>
                 &times;
               </span>
-              <span>Need Name</span>
-              <input type="text" className="income-text" ref={nameRef} />
-              <br />
-              <span>description</span>
-              <input type="text" className="income-text" ref={descriptionRef} />
-              <br />
-              <span>budget</span>
-              <input
-                type="text"
-                className="income-text"
-                placeholder=""
-                value={budgetValue}
-                onChange={handleBudgetValueChange}
-                maxLength={12}
-              />
-              <br />
-              <span>actual</span>
-              <input
-                type="text"
-                className="income-text"
-                placeholder=""
-                value={actualValue}
-                onChange={handleActualValueChange}
-                maxLength={12}
-              />
-              <input
-                type="button"
-                value="Submit"
-                onClick={handleFormSubmit}
-                className="add-needs-list"
-              />
+              <div className="modal-content-container">
+                <h2 className="modal-content-title">Need Info</h2>
+                <div className="modal-content-details">
+                  <div className="modal-content-left">
+                    <span>Need Name</span>
+                    <input type="text" className="income-text" ref={nameRef} />
+                    <span>description</span>
+                    <input
+                      type="text"
+                      className="income-text"
+                      ref={descriptionRef}
+                    />
+                  </div>
+                  <div className="modal-content-right">
+                    <span>budget</span>
+                    <input
+                      type="text"
+                      className="income-text"
+                      placeholder=""
+                      value={budgetValue}
+                      onChange={handleBudgetValueChange}
+                      maxLength={12}
+                    />
+                    <br />
+                    <span>actual</span>
+                    <input
+                      type="text"
+                      className="income-text"
+                      placeholder=""
+                      value={actualValue}
+                      onChange={handleActualValueChange}
+                      maxLength={12}
+                    />
+                    <input
+                      type="button"
+                      value="Submit"
+                      onClick={handleFormSubmit}
+                      className="add-needs-list"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}
