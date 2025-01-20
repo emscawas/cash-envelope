@@ -1,19 +1,13 @@
 .needs-lists-container {
   display: flex;
-  /* flex-direction: column;
-    align-items: center;
-    justify-content: center; */
   width: 100%;
   height: 100%;
-  /* padding: 1rem; */
   position: relative;
 }
 
 .needs-lists {
   display: flex;
   flex-direction: column;
-  /* align-items: center;
-    justify-content: center; */
   width: 100%;
   height: 100%;
   padding: 1rem;
@@ -59,6 +53,7 @@
 }
 
 .close-button {
+  all: unset;
   color: #aaa;
   float: right;
   font-size: 28px;
@@ -106,6 +101,67 @@
 }
 
 /* needs list part */
+.need-name-text, .need-description-text, .modal-text {
+  color: black;
+  background-color: #D9D9D9;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #7CD689;
+  max-width: 150px;
+  border-radius: 5px;
+  padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.need-name-label {
+  position: absolute;
+  left: 30px;
+  top: 95px;
+  z-index: 1;
+  background-color: #D9D9D9;
+}
+
+.need-description-label {
+  position: absolute;
+  left: 30px;
+  top: 150px;
+  z-index: 1;
+  background-color: #D9D9D9;
+}
+
+.budget-text, .actual-text {
+  color: black;
+  background-color: #D9D9D9;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #7CD689;
+  max-width: 150px;
+  border-radius: 5px;
+  text-align: right;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.budget-value-label {
+  position: absolute;
+  right: 125px;
+  top: 95px;
+  z-index: 1;
+  background-color: #D9D9D9;
+}
+
+.actual-value-label {
+  position: absolute;
+  right: 130px;
+  top: 150px;
+  z-index: 1;
+  background-color: #D9D9D9;
+}
+
 .needs-item {
   color: black;
   display: flex;

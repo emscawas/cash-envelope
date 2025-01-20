@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import "./needs.css";
-import Divider from "../../Utils/divider";
 
 interface NeedItem {
   budget: string;
@@ -16,7 +15,7 @@ function NeedsLists() {
   const [needsList, setNeedsList] = useState<NeedItem[]>([]);
 
   const nameRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const handleFormSubmit = () => {
     if (budgetValue && actualValue) {
@@ -25,8 +24,8 @@ function NeedsLists() {
         {
           budget: budgetValue,
           actual: actualValue,
-          needName: nameRef.current?.value || "",
-          needDescription: descriptionRef.current?.value || "",
+          needName: nameRef.current?.value ?? "",
+          needDescription: descriptionRef.current?.value ?? "",
         },
       ]);
       setBudgetValue("");
@@ -70,37 +69,47 @@ function NeedsLists() {
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <span className="close-button" onClick={handleCloseModal}>
+              <button
+                className="close-button"
+                onClick={handleCloseModal}
+                aria-label="Close"
+              >
                 &times;
-              </span>
+              </button>
               <div className="modal-content-container">
                 <h2 className="modal-content-title">Need Info</h2>
                 <div className="modal-content-details">
                   <div className="modal-content-left">
-                    <span>Need Name</span>
-                    <input type="text" className="income-text" ref={nameRef} />
-                    <span>description</span>
-                    <input
-                      type="text"
-                      className="income-text"
+                    <span className="need-name-label">Name</span>
+                    <input 
+                    type="text" 
+                    placeholder=""
+                    className="need-name-text" 
+                    ref={nameRef} />
+                    <span className="need-description-label">Description</span>
+                    <textarea
+                      className="need-description-text"
+                      placeholder=""
+                      maxLength={25}
+                      rows={4}
                       ref={descriptionRef}
                     />
                   </div>
                   <div className="modal-content-right">
-                    <span>budget</span>
+                    <span className="budget-value-label">Budget</span>
                     <input
                       type="text"
-                      className="income-text"
+                      className="budget-text"
                       placeholder=""
                       value={budgetValue}
                       onChange={handleBudgetValueChange}
                       maxLength={12}
                     />
                     <br />
-                    <span>actual</span>
+                    <span className="actual-value-label">Actual</span>
                     <input
                       type="text"
-                      className="income-text"
+                      className="actual-text"
                       placeholder=""
                       value={actualValue}
                       onChange={handleActualValueChange}

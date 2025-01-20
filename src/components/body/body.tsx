@@ -57,6 +57,7 @@ function BudgetPlanner() {
           <span className="needs-percentage-placeholder">Percentage</span>
         </div>
       </form>
+      <br />
       <Divider pixel="3" />
       {/* component for list of budgets allocated */}
       <div className="lists-tracker">
