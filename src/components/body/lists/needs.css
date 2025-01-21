@@ -90,17 +90,19 @@
 .modal-content-left,
 .modal-content-right {
   width: 50%;
-}
-
-.modal-content-left {
-  border: 1px solid red;
+  padding: 0 10px;
 }
 
 .modal-content-right {
-  border: 1px solid green;
+ display: flex;
+  flex-direction: column;
 }
 
 /* needs list part */
+.budget-container, .actual-container, .need-container, .description-container {
+  position: relative;
+}
+
 .need-name-text, .need-description-text, .modal-text {
   color: black;
   background-color: #D9D9D9;
@@ -108,27 +110,46 @@
   box-sizing: border-box;
   outline: none;
   border: 1px solid #7CD689;
-  max-width: 150px;
+  width: 100%;
   border-radius: 5px;
   padding: 0.5rem 1.5rem 0.5rem 0.5rem;
-  position: relative;
   margin-bottom: 1rem;
 }
 
 .need-name-label {
+  color: rgb(110, 110, 110);
   position: absolute;
-  left: 30px;
-  top: 95px;
-  z-index: 1;
+  left: 10px;
+  top: 7px;
   background-color: #D9D9D9;
+  transition: ease-in-out 0.3s;
+  pointer-events: none;
+}
+
+.need-name-text:not(:placeholder-shown) + .need-name-label,
+.need-name-text:focus + .need-name-label {
+    top: -10px;
+    font-size: 0.8rem;
+    background-color: #D9D9D9;
+    color: #7CD689;
 }
 
 .need-description-label {
+  color: rgb(110, 110, 110);
   position: absolute;
-  left: 30px;
-  top: 150px;
-  z-index: 1;
+  left: 10px;
+  top: 7px;
   background-color: #D9D9D9;
+  transition: ease-in-out 0.3s;
+  pointer-events: none;
+}
+
+.need-description-text:not(:placeholder-shown) + .need-description-label,
+.need-description-text:focus + .need-description-label {
+    top: -10px;
+    font-size: 0.8rem;
+    background-color: #D9D9D9;
+    color: #7CD689;
 }
 
 .budget-text, .actual-text {
@@ -139,27 +160,46 @@
   box-sizing: border-box;
   outline: none;
   border: 1px solid #7CD689;
-  max-width: 150px;
+  width: 100%;
   border-radius: 5px;
   text-align: right;
-  position: relative;
   margin-bottom: 1rem;
 }
 
 .budget-value-label {
+  color: rgb(110, 110, 110);
   position: absolute;
-  right: 125px;
-  top: 95px;
-  z-index: 1;
+  left: 10px;
+  top: 7px;
   background-color: #D9D9D9;
+  transition: ease-in-out 0.3s;
+  pointer-events: none;
+}
+
+.budget-text:not(:placeholder-shown) + .budget-value-label,
+.budget-text:focus + .budget-value-label {
+    top: -10px;
+    font-size: 0.8rem;
+    background-color: #D9D9D9;
+    color: #7CD689;
 }
 
 .actual-value-label {
+  color: rgb(110, 110, 110);
   position: absolute;
-  right: 130px;
-  top: 150px;
-  z-index: 1;
+  left: 10px;
+  top: 7px;
   background-color: #D9D9D9;
+  transition: ease-in-out 0.3s;
+  pointer-events: none;
+}
+
+.actual-text:not(:placeholder-shown) + .actual-value-label,
+.actual-text:focus + .actual-value-label {
+    top: -10px;
+    font-size: 0.8rem;
+    background-color: #D9D9D9;
+    color: #7CD689;
 }
 
 .needs-item {
@@ -169,4 +209,18 @@
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #7cd689;
+}
+
+.submit-button-container {
+  width: 100%;
+  color: white;
+  background-color: #7cd689;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.add-needs-list {
+  all: unset;
+  width: 100%;
 }

@@ -80,47 +80,56 @@ function NeedsLists() {
                 <h2 className="modal-content-title">Need Info</h2>
                 <div className="modal-content-details">
                   <div className="modal-content-left">
-                    <span className="need-name-label">Name</span>
-                    <input 
-                    type="text" 
-                    placeholder=""
-                    className="need-name-text" 
-                    ref={nameRef} />
-                    <span className="need-description-label">Description</span>
-                    <textarea
-                      className="need-description-text"
+                    <div className="need-container">
+                      <input 
+                      type="text" 
                       placeholder=""
-                      maxLength={25}
-                      rows={4}
-                      ref={descriptionRef}
-                    />
+                      className="need-name-text" 
+                      ref={nameRef} />
+                      <span className="need-name-label">Name</span>
+                    </div>
+                    <div className="description-container">
+                      <textarea
+                        className="need-description-text"
+                        placeholder=""
+                        maxLength={25}
+                        rows={4}
+                        ref={descriptionRef}
+                      />
+                      <span className="need-description-label">Description</span>
+                    </div>
                   </div>
                   <div className="modal-content-right">
-                    <span className="budget-value-label">Budget</span>
-                    <input
-                      type="text"
-                      className="budget-text"
-                      placeholder=""
-                      value={budgetValue}
-                      onChange={handleBudgetValueChange}
-                      maxLength={12}
-                    />
-                    <br />
-                    <span className="actual-value-label">Actual</span>
-                    <input
-                      type="text"
-                      className="actual-text"
-                      placeholder=""
-                      value={actualValue}
-                      onChange={handleActualValueChange}
-                      maxLength={12}
-                    />
-                    <input
-                      type="button"
-                      value="Submit"
-                      onClick={handleFormSubmit}
-                      className="add-needs-list"
-                    />
+                    <div className="budget-container">
+                      <input
+                        type="text"
+                        className="budget-text"
+                        placeholder=""
+                        value={budgetValue}
+                        onChange={handleBudgetValueChange}
+                        maxLength={12}
+                      />
+                      <span className="budget-value-label">Budget</span>
+                    </div>
+                    <div className="actual-container">
+                      <input
+                        type="text"
+                        className="actual-text"
+                        placeholder=""
+                        value={actualValue}
+                        onChange={handleActualValueChange}
+                        maxLength={12}
+                      />
+                      <span className="actual-value-label">Actual</span>
+                    </div>
+                    <div className="submit-button-container">
+                      <input
+                        type="button"
+                        value="ADD"
+                        onClick={handleFormSubmit}
+                        className="add-needs-list"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
