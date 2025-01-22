@@ -139,11 +139,15 @@ function NeedsLists() {
       </div>
       <div className="needs-lists">
         {needsList.map((item, index) => (
-          <div key={index} className="needs-item">
-            <span>Name: {item.needName}</span>
-            <span>Description: {item.needDescription}</span>
-            <span>Budget: {item.budget}</span>
-            <span>Actual: {item.actual}</span>
+          <div key={`${item.needName}-${index}`} className="needs-item">
+            <div className="list-left">
+              <span>Name: {item.needName}</span>
+              <span>Description: {item.needDescription}</span>
+            </div>
+            <div className="list-right">
+              <span>Budget: {item.budget}</span>
+              <span>Actual: {item.actual}</span>
+            </div>
           </div>
         ))}
       </div>
