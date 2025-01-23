@@ -1,11 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./needs.css";
 
 interface NeedItem {
   budget: string;
   actual: string;
-  needName: string;
-  needDescription: string;
+  name: string;
+  description: string;
 }
 
 function NeedsLists() {
@@ -13,27 +13,53 @@ function NeedsLists() {
   const [budgetValue, setBudgetValue] = useState("");
   const [actualValue, setActualValue] = useState("");
   const [needsList, setNeedsList] = useState<NeedItem[]>([]);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleFormSubmit = () => {
-    if (budgetValue && actualValue) {
-      setNeedsList([
-        ...needsList,
-        {
-          budget: budgetValue,
-          actual: actualValue,
-          needName: nameRef.current?.value ?? "",
-          needDescription: descriptionRef.current?.value ?? "",
-        },
-      ]);
-      setBudgetValue("");
-      setActualValue("");
-      setIsModalOpen(false);
-    } else {
-      alert("Please fill in both budget and actual values.");
+  useEffect(() => {
+    if (isEditMode && currentIndex !== null) {
+      const item = needsList[currentIndex];
+      if (nameRef.current) nameRef.current.value = item.name;
+      if (descriptionRef.current) descriptionRef.current.value = item.description;
     }
+  }, [isEditMode, currentIndex, needsList]);
+
+  const handleFormSubmit = () => {
+    const name = nameRef.current?.value ?? '';
+    const description = descriptionRef.current?.value ?? '';
+
+    if (budgetValue && actualValue && name) {
+      const newItem = { budget: budgetValue, actual: actualValue, name, description };
+      console.log("newItem", newItem);
+      if (isEditMode && currentIndex !== null) {
+        const updatedList = [...needsList];
+        updatedList[currentIndex] = newItem;
+        setNeedsList(updatedList);
+      } else {
+        setNeedsList([...needsList, newItem]);
+      }
+      setBudgetValue('');
+      setActualValue('');
+      setIsModalOpen(false);
+      setIsEditMode(false);
+      setCurrentIndex(null);
+    } else {
+      alert('Please fill in required fields.');
+    }
+  };
+
+  const handleEditClick = (index: number) => {
+    const item = needsList[index];
+    setBudgetValue(item.budget);
+    setActualValue(item.actual);
+    if (nameRef.current) nameRef.current.value = item.name;
+    if (descriptionRef.current) descriptionRef.current.value = item.description;
+    setIsEditMode(true);
+    setCurrentIndex(index);
+    setIsModalOpen(true);
   };
 
   const handleBudgetValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,10 +76,16 @@ function NeedsLists() {
   };
 
   const handleAddClick = () => {
+    if (nameRef.current) nameRef.current.value = '';
+    if (descriptionRef.current) descriptionRef.current.value = '';
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
+    setBudgetValue('');
+    setActualValue('');
+    if (nameRef.current) nameRef.current.value = '';
+    if (descriptionRef.current) descriptionRef.current.value = '';
     setIsModalOpen(false);
   };
 
@@ -77,7 +109,7 @@ function NeedsLists() {
                 &times;
               </button>
               <div className="modal-content-container">
-                <h2 className="modal-content-title">Need Info</h2>
+                <h2 className="modal-content-title">{isEditMode ? 'Edit Need' : 'Need Info'}</h2>
                 <div className="modal-content-details">
                   <div className="modal-content-left">
                     <div className="need-container">
@@ -125,7 +157,7 @@ function NeedsLists() {
                     <div className="submit-button-container">
                       <input
                         type="button"
-                        value="ADD"
+                        value={isEditMode ? 'EDIT' : 'ADD'}
                         onClick={handleFormSubmit}
                         className="add-needs-list"
                       />
@@ -139,15 +171,16 @@ function NeedsLists() {
       </div>
       <div className="needs-lists">
         {needsList.map((item, index) => (
-          <div key={`${item.needName}-${index}`} className="needs-item">
+          <div key={`${item.name}-${index}`} className="needs-item">
             <div className="list-left">
-              <span>Name: {item.needName}</span>
-              <span>Description: {item.needDescription}</span>
+              <span>Name: {item.name}</span>
+              <span>Description: {item.description}</span>
             </div>
             <div className="list-right">
               <span>Budget: {item.budget}</span>
               <span>Actual: {item.actual}</span>
             </div>
+            <button onClick={() => handleEditClick(index)}>Edit</button>
           </div>
         ))}
       </div>
