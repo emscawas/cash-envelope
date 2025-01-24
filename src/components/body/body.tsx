@@ -6,6 +6,7 @@ import NeedsLists from "./lists/needs";
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
   const [needsPercentage, setNeedsPercentage] = useState("50");
+  const [totalActual, setTotalActual] = useState(0);
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, "");
@@ -27,7 +28,11 @@ function BudgetPlanner() {
     const totalIncome = Number(income.replace(/,/g, ""));
     const needsPercentageValue =
       Number(needsPercentage.replace(/%/g, "")) / 100;
-    return totalIncome * needsPercentageValue;
+    return Math.round(totalIncome * needsPercentageValue * 100) / 100;
+  };
+
+  const handleTotalActualChange = (total: number) => {
+    setTotalActual(total);
   };
 
   return (
@@ -61,7 +66,7 @@ function BudgetPlanner() {
       <Divider pixel="3" />
       {/* component for list of budgets allocated */}
       <div className="lists-tracker">
-        <NeedsLists />
+        <NeedsLists onTotalActualChange={handleTotalActualChange} />
       </div>
       <Divider pixel="3" />
       {/* component for footer */}
@@ -69,7 +74,7 @@ function BudgetPlanner() {
         <div className="dl-buttons"></div>
         <div className="total-texts">
           <span className="total-needs">{calculateTotalNeeds()}</span>
-          <span className="needs-total-budget">Total:</span>
+          <span className="needs-total-budget">Total: {totalActual.toLocaleString()}</span>
         </div>
       </div>
     </div>

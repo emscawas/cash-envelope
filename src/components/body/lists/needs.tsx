@@ -8,7 +8,7 @@ interface NeedItem {
   description: string;
 }
 
-function NeedsLists() {
+function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (total: number) => void }>) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [budgetValue, setBudgetValue] = useState("");
   const [actualValue, setActualValue] = useState("");
@@ -25,6 +25,7 @@ function NeedsLists() {
       if (nameRef.current) nameRef.current.value = item.name;
       if (descriptionRef.current) descriptionRef.current.value = item.description;
     }
+    calculateTotalActual(needsList);
   }, [isEditMode, currentIndex, needsList]);
 
   const handleFormSubmit = () => {
@@ -33,7 +34,6 @@ function NeedsLists() {
 
     if (budgetValue && actualValue && name) {
       const newItem = { budget: budgetValue, actual: actualValue, name, description };
-      console.log("newItem", newItem);
       if (isEditMode && currentIndex !== null) {
         const updatedList = [...needsList];
         updatedList[currentIndex] = newItem;
@@ -87,6 +87,12 @@ function NeedsLists() {
     if (nameRef.current) nameRef.current.value = '';
     if (descriptionRef.current) descriptionRef.current.value = '';
     setIsModalOpen(false);
+    setIsEditMode(false);
+  };
+
+  const calculateTotalActual = (list: NeedItem[]) => {
+    const total = list.reduce((sum, item) => sum + Number(item.actual.replace(/,/g, '')), 0);
+    onTotalActualChange(total);
   };
 
   return (

@@ -83,6 +83,10 @@
     color: #7CD689;
 }
 
+.needs-total-budget {
+    color: black;
+}
+
 .lists-tracker {
     height: 68vh;
 }
