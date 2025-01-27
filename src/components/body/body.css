@@ -87,6 +87,10 @@
     color: black;
 }
 
+.over-budget {
+    color: red;
+}
+
 .lists-tracker {
     height: 68vh;
 }
@@ -101,15 +105,13 @@
     display: flex;
     justify-content: space-between;
     width: 50%;
-    border: 1px solid red;
 }
 
 .total-texts {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 50%;
-    border: 1px solid blue;
 }
 
 .total-needs {

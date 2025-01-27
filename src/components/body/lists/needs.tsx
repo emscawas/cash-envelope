@@ -8,7 +8,9 @@ interface NeedItem {
   description: string;
 }
 
-function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (total: number) => void }>) {
+function NeedsLists({
+  onTotalActualChange,
+}: Readonly<{ onTotalActualChange: (total: number) => void }>) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [budgetValue, setBudgetValue] = useState("");
   const [actualValue, setActualValue] = useState("");
@@ -23,17 +25,23 @@ function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (to
     if (isEditMode && currentIndex !== null) {
       const item = needsList[currentIndex];
       if (nameRef.current) nameRef.current.value = item.name;
-      if (descriptionRef.current) descriptionRef.current.value = item.description;
+      if (descriptionRef.current)
+        descriptionRef.current.value = item.description;
     }
     calculateTotalActual(needsList);
   }, [isEditMode, currentIndex, needsList]);
 
   const handleFormSubmit = () => {
-    const name = nameRef.current?.value ?? '';
-    const description = descriptionRef.current?.value ?? '';
+    const name = nameRef.current?.value ?? "";
+    const description = descriptionRef.current?.value ?? "";
 
     if (budgetValue && actualValue && name) {
-      const newItem = { budget: budgetValue, actual: actualValue, name, description };
+      const newItem = {
+        budget: budgetValue,
+        actual: actualValue,
+        name,
+        description,
+      };
       if (isEditMode && currentIndex !== null) {
         const updatedList = [...needsList];
         updatedList[currentIndex] = newItem;
@@ -41,13 +49,13 @@ function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (to
       } else {
         setNeedsList([...needsList, newItem]);
       }
-      setBudgetValue('');
-      setActualValue('');
+      setBudgetValue("");
+      setActualValue("");
       setIsModalOpen(false);
       setIsEditMode(false);
       setCurrentIndex(null);
     } else {
-      alert('Please fill in required fields.');
+      alert("Please fill in required fields.");
     }
   };
 
@@ -76,22 +84,25 @@ function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (to
   };
 
   const handleAddClick = () => {
-    if (nameRef.current) nameRef.current.value = '';
-    if (descriptionRef.current) descriptionRef.current.value = '';
+    if (nameRef.current) nameRef.current.value = "";
+    if (descriptionRef.current) descriptionRef.current.value = "";
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setBudgetValue('');
-    setActualValue('');
-    if (nameRef.current) nameRef.current.value = '';
-    if (descriptionRef.current) descriptionRef.current.value = '';
+    setBudgetValue("");
+    setActualValue("");
+    if (nameRef.current) nameRef.current.value = "";
+    if (descriptionRef.current) descriptionRef.current.value = "";
     setIsModalOpen(false);
     setIsEditMode(false);
   };
 
   const calculateTotalActual = (list: NeedItem[]) => {
-    const total = list.reduce((sum, item) => sum + Number(item.actual.replace(/,/g, '')), 0);
+    const total = list.reduce(
+      (sum, item) => sum + Number(item.actual.replace(/,/g, "")),
+      0
+    );
     onTotalActualChange(total);
   };
 
@@ -110,20 +121,22 @@ function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (to
               <button
                 className="close-button"
                 onClick={handleCloseModal}
-                aria-label="Close"
-              >
+                aria-label="Close">
                 &times;
               </button>
               <div className="modal-content-container">
-                <h2 className="modal-content-title">{isEditMode ? 'Edit Need' : 'Need Info'}</h2>
+                <h2 className="modal-content-title">
+                  {isEditMode ? "Edit Need" : "Need Info"}
+                </h2>
                 <div className="modal-content-details">
                   <div className="modal-content-left">
                     <div className="need-container">
-                      <input 
-                      type="text" 
-                      placeholder=""
-                      className="need-name-text" 
-                      ref={nameRef} />
+                      <input
+                        type="text"
+                        placeholder=""
+                        className="need-name-text"
+                        ref={nameRef}
+                      />
                       <span className="need-name-label">Name</span>
                     </div>
                     <div className="description-container">
@@ -134,7 +147,9 @@ function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (to
                         rows={4}
                         ref={descriptionRef}
                       />
-                      <span className="need-description-label">Description</span>
+                      <span className="need-description-label">
+                        Description
+                      </span>
                     </div>
                   </div>
                   <div className="modal-content-right">
@@ -163,7 +178,7 @@ function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (to
                     <div className="submit-button-container">
                       <input
                         type="button"
-                        value={isEditMode ? 'EDIT' : 'ADD'}
+                        value={isEditMode ? "EDIT" : "ADD"}
                         onClick={handleFormSubmit}
                         className="add-needs-list"
                       />
@@ -177,7 +192,11 @@ function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (to
       </div>
       <div className="needs-lists">
         {needsList.map((item, index) => (
-          <div key={`${item.name}-${index}`} className="needs-item">
+          <button
+            key={`${item.name}-${index}`}
+            className="needs-item"
+            onClick={() => handleEditClick(index)}
+            tabIndex={0}>
             <div className="list-left">
               <span>Name: {item.name}</span>
               <span>Description: {item.description}</span>
@@ -186,8 +205,7 @@ function NeedsLists({ onTotalActualChange }: Readonly<{ onTotalActualChange: (to
               <span>Budget: {item.budget}</span>
               <span>Actual: {item.actual}</span>
             </div>
-            <button onClick={() => handleEditClick(index)}>Edit</button>
-          </div>
+          </button>
         ))}
       </div>
     </div>

@@ -219,6 +219,7 @@
 /* needs list part */
 
 .needs-item {
+  all: unset;
   color: black;
   display: flex;
   justify-content: space-between;
@@ -226,6 +227,8 @@
   align-items: center;
   padding: 1rem 0.5rem;
   border-bottom: 1px solid #7cd689;
+  height: 50;
+  position: inherit;
 }
 
 .list-left {
