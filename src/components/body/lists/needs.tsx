@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./needs.css";
+import DeleteButton from "../../../assets/icons8-delete-button-50.svg";
 
 interface NeedItem {
   budget: string;
@@ -106,6 +107,23 @@ function NeedsLists({
     onTotalActualChange(total);
   };
 
+  const handleDeleteClick = () => {
+    if (currentIndex !== null) {
+      const updatedList = needsList.filter(
+        (_, index) => index !== currentIndex
+      );
+      setNeedsList(updatedList);
+      setBudgetValue("");
+      setActualValue("");
+      if (nameRef.current) nameRef.current.value = "";
+      if (descriptionRef.current) descriptionRef.current.value = "";
+      setIsModalOpen(false);
+      setIsEditMode(false);
+      setCurrentIndex(null);
+      calculateTotalActual(updatedList);
+    }
+  };
+
   return (
     <div className="needs-lists-container">
       <div className="btn-modal">
@@ -118,16 +136,26 @@ function NeedsLists({
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <button
-                className="close-button"
-                onClick={handleCloseModal}
-                aria-label="Close">
-                &times;
-              </button>
-              <div className="modal-content-container">
+              <div className="top-modal-buttons">
+                <button
+                  className="close-button"
+                  onClick={handleCloseModal}
+                  aria-label="Close">
+                  &times;
+                </button>
                 <h2 className="modal-content-title">
                   {isEditMode ? "Edit Need" : "Need Info"}
                 </h2>
+                {isEditMode && (
+                  <button
+                    className="delete-button"
+                    onClick={handleDeleteClick}
+                    aria-label="Delete">
+                    <img src={DeleteButton} alt="Delete" />
+                  </button>
+                )}
+              </div>
+              <div className="modal-content-container">
                 <div className="modal-content-details">
                   <div className="modal-content-left">
                     <div className="need-container">

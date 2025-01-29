@@ -35,20 +35,16 @@ function BudgetPlanner() {
 
   const handleTotalActualChange = (total: number) => {
     const totalNeed = calculateTotalNeeds().replace(/,/g, "");
-    if (total > Number(totalNeed)) {
-      document
-        .querySelector(".needs-total-budget")
-        ?.classList.add("over-budget");
-    }
+    total > Number(totalNeed) ? document.querySelector(".needs-total-budget")?.classList.add("over-budget") : document.querySelector(".needs-total-budget")?.classList.remove("over-budget");
+
     setTotalActual(total);
   };
 
   const calculateTotalRemaining = () => {
     const totalNeeds = Number(calculateTotalNeeds().replace(/,/g, ""));
     const result = totalNeeds - totalActual;
-    if (result < 0) {
-      document.querySelector(".total-remaining")?.classList.add("over-budget");
-    }
+    result < 0 ? document.querySelector(".total-remaining")?.classList.add("over-budget") : document.querySelector(".total-remaining")?.classList.remove("over-budget");
+
     return result.toLocaleString();
   };
 
