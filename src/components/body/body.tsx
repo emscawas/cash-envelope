@@ -35,15 +35,23 @@ function BudgetPlanner() {
 
   const handleTotalActualChange = (total: number) => {
     const totalNeed = calculateTotalNeeds().replace(/,/g, "");
-    total > Number(totalNeed) ? document.querySelector(".needs-total-budget")?.classList.add("over-budget") : document.querySelector(".needs-total-budget")?.classList.remove("over-budget");
+    const elements = document.querySelectorAll(".needs-total-budget");
 
+    elements.forEach((element) => {
+      total > Number(totalNeed) ? element?.classList.add("over-budget") : element?.classList.remove("over-budget");
+    });
+    
     setTotalActual(total);
   };
 
   const calculateTotalRemaining = () => {
     const totalNeeds = Number(calculateTotalNeeds().replace(/,/g, ""));
+    const elements = document.querySelectorAll(".total-remaining");
     const result = totalNeeds - totalActual;
-    result < 0 ? document.querySelector(".total-remaining")?.classList.add("over-budget") : document.querySelector(".total-remaining")?.classList.remove("over-budget");
+
+    elements.forEach((element) => {
+      result < 0 ? element?.classList.add("over-budget") : element?.classList.remove("over-budget");
+    });
 
     return result.toLocaleString();
   };
@@ -86,15 +94,16 @@ function BudgetPlanner() {
       <div className="footer">
         <div className="dl-buttons"></div>
         <div className="total-texts">
-          <span className="total-needs">
-            {needsPercentage}% of Needs: {calculateTotalNeeds()}
-          </span>
-          <span className="needs-total-budget">
-            Total Actual: {totalActual.toLocaleString()}
-          </span>
-          <span className="total-remaining">
-            Remaining: {calculateTotalRemaining()}
-          </span>
+          <div className="total-labels">
+            <span className="total-needs">{needsPercentage}% of Needs:</span>
+            <span className="needs-total-budget">Total Actual:</span>
+            <span className="total-remaining">Remaining:</span>
+          </div>
+          <div className="total-values">
+            <span>{calculateTotalNeeds()}</span>
+            <span className="needs-total-budget">{totalActual.toLocaleString()}</span>
+            <span className="total-remaining">{calculateTotalRemaining()}</span>
+          </div>
         </div>
       </div>
     </div>
