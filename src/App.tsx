@@ -2,8 +2,8 @@ import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import './App.css'
-import Header  from './components/header/header'
-import BudgetPlanner from './components/body/body'
+import Header  from './components/header/Header'
+import BudgetPlanner from './components/body/BudgetPlanner'
 
 function App() {
   // const [count, setCount] = useState(0)

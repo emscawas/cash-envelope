@@ -1,5 +1,5 @@
 import "./header.css";
-import CurrentDate from "../Utils/date";
+import CurrentDate from "../Utils/Date";
 
 function Header() {
   return (

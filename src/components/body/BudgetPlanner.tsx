@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import "./body.css";
-import Divider from "../Utils/divider";
-import NeedsLists from "./lists/needs";
+import "./budgetplanner.css";
+import Divider from "../Utils/Divider";
+import NeedsLists from "../body/lists/Needs";
+// import WantsLists from "../body/lists/Wants";
+// import { useSwipeable } from 'react-swipeable';
 
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
   const [needsPercentage, setNeedsPercentage] = useState("50");
   const [totalActual, setTotalActual] = useState(0);
+  // const [currentList, setCurrentList] = useState('needs');
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, "");
@@ -56,6 +59,15 @@ function BudgetPlanner() {
     return result.toLocaleString();
   };
 
+  // const handlers = useSwipeable({
+  //   onSwipedLeft: () => setCurrentList((prev) => (prev === 'needs' ? 'wants' : 'needs')),
+  //   onSwipedRight: () => setCurrentList((prev) => (prev === 'wants' ? 'needs' : 'wants')),
+  // });
+  // const handlers = useSwipeable({
+  //   onSwipedLeft: () => setCurrentList((prev) => (prev === 'needs' ? 'wants' : prev === 'wants' ? 'savings' : 'needs')),
+  //   onSwipedRight: () => setCurrentList((prev) => (prev === 'savings' ? 'wants' : prev === 'wants' ? 'needs' : 'savings')),
+  // });
+
   return (
     <div className="body">
       {/* make this component for budgetting forms */}
@@ -87,6 +99,10 @@ function BudgetPlanner() {
       <Divider pixel="3" />
       {/* component for list of budgets allocated */}
       <div className="lists-tracker">
+      {/* <div className="lists-tracker"  {...handlers}> */}
+      {/* {currentList === 'needs' && <NeedsLists onTotalActualChange={handleTotalActualChange} />}
+        {currentList === 'wants' && <WantsLists onTotalActualChange={handleTotalActualChange} />} */}
+        {/* {currentList === 'savings' && <SavingsDebtsLists onTotalActualChange={handleTotalActualChange} />} */}
         <NeedsLists onTotalActualChange={handleTotalActualChange} />
       </div>
       <Divider pixel="3" />

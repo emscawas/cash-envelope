@@ -127,3 +127,27 @@
     flex-direction: column;
     align-items: flex-end;
 }
+
+@media (max-width: 768px) {
+    .lists-tracker {
+      overflow: hidden;
+      position: relative;
+    }
+  
+    .lists-tracker > div {
+      width: 100%;
+      transition: transform 0.3s ease-in-out;
+    }
+  
+    .lists-tracker.needs {
+      transform: translateX(0%);
+    }
+  
+    .lists-tracker.wants {
+      transform: translateX(-100%);
+    }
+  
+    .lists-tracker.savings {
+      transform: translateX(-200%);
+    }
+  }
