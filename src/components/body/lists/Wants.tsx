@@ -10,8 +10,8 @@ interface WantItem {
 }
 
 function WantsLists({
-  onTotalActualChange,
-}: Readonly<{ onTotalActualChange: (total: number) => void }>) {
+  wantsData,
+}: Readonly<{ wantsData: (total: number,  wantsList: object) => void }>) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [budgetValue, setBudgetValue] = useState("");
   const [actualValue, setActualValue] = useState("");
@@ -104,7 +104,7 @@ function WantsLists({
       (sum, item) => sum + Number(item.actual.replace(/,/g, "")),
       0
     );
-    onTotalActualChange(total);
+    wantsData(total, wantsList);
   };
 
   const handleDeleteClick = () => {

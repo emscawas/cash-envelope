@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import "./budgetplanner.css";
 import Divider from "../Utils/Divider";
 import NeedsLists from "../body/lists/Needs";
-// import WantsLists from "../body/lists/Wants";
-// import { useSwipeable } from 'react-swipeable';
+import WantsLists from "../body/lists/Wants";
 
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
   const [needsPercentage, setNeedsPercentage] = useState("50");
   const [totalActual, setTotalActual] = useState(0);
-  // const [currentList, setCurrentList] = useState('needs');
+  const [currentBudget, setCurrentBudget] = useState(0);
+  const [budgetData, setBudgetData] = useState({});
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, "");
@@ -36,7 +36,7 @@ function BudgetPlanner() {
     return totalCalculatedValue.toLocaleString();
   };
 
-  const handleTotalActualChange = (total: number) => {
+  const handleTotalActualChange = (total: number, lists: object) => {
     const totalNeed = calculateTotalNeeds().replace(/,/g, "");
     const elements = document.querySelectorAll(".needs-total-budget");
 
@@ -59,14 +59,19 @@ function BudgetPlanner() {
     return result.toLocaleString();
   };
 
-  // const handlers = useSwipeable({
-  //   onSwipedLeft: () => setCurrentList((prev) => (prev === 'needs' ? 'wants' : 'needs')),
-  //   onSwipedRight: () => setCurrentList((prev) => (prev === 'wants' ? 'needs' : 'wants')),
-  // });
-  // const handlers = useSwipeable({
-  //   onSwipedLeft: () => setCurrentList((prev) => (prev === 'needs' ? 'wants' : prev === 'wants' ? 'savings' : 'needs')),
-  //   onSwipedRight: () => setCurrentList((prev) => (prev === 'savings' ? 'wants' : prev === 'wants' ? 'needs' : 'savings')),
-  // });
+  const budgetPlannerBody = [<NeedsLists needsData={handleTotalActualChange} key="needs" />, <WantsLists wantsData={handleTotalActualChange} key="wants" />];
+
+  const nextBudgetPlanner = () => {
+    setCurrentBudget((prevIndex) => (prevIndex + 1) % budgetPlannerBody.length);
+    console.log("next")
+  };
+
+  const prevBudgetPlanner = () => {
+    setCurrentBudget((prevIndex) =>
+      prevIndex === 0 ? budgetPlannerBody.length - 1 : prevIndex - 1
+    );
+    console.log("prev")
+  };
 
   return (
     <div className="body">
@@ -96,14 +101,25 @@ function BudgetPlanner() {
         </div>
       </form>
       <br />
+      <div className="navigations">
+        <input 
+            type="button"
+            className="prev-button"
+            value="prev"
+            onClick={prevBudgetPlanner}
+          />
+        <span>{currentBudget == 0 ? "Needs" : "Wants"}</span>
+        <input 
+          type="button"
+          className="prev-button"
+          value="next"
+          onClick={nextBudgetPlanner}
+        />
+      </div>
       <Divider pixel="3" />
       {/* component for list of budgets allocated */}
       <div className="lists-tracker">
-      {/* <div className="lists-tracker"  {...handlers}> */}
-      {/* {currentList === 'needs' && <NeedsLists onTotalActualChange={handleTotalActualChange} />}
-        {currentList === 'wants' && <WantsLists onTotalActualChange={handleTotalActualChange} />} */}
-        {/* {currentList === 'savings' && <SavingsDebtsLists onTotalActualChange={handleTotalActualChange} />} */}
-        <NeedsLists onTotalActualChange={handleTotalActualChange} />
+        {budgetPlannerBody[currentBudget]}
       </div>
       <Divider pixel="3" />
       {/* component for footer */}

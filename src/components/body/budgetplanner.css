@@ -1,39 +1,41 @@
-.body {
+@media (max-width: 768px) {
+  .body {
     height: 142px;
-}
+  }
 
-.budget-form {
+  .budget-form {
     padding: 1rem;
     display: flex;
     justify-content: space-between;
-}
+  }
 
-.income-container, .needs-percentage-container {
+  .income-container,
+  .needs-percentage-container {
     position: relative;
-}
+  }
 
-.income-text {
+  .income-text {
     color: black;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     padding: 0.5rem;
     font-size: 1.2rem;
     box-sizing: border-box;
     outline: none;
-    border: 1px solid #7CD689;
+    border: 1px solid #7cd689;
     max-width: 150px;
     border-radius: 5px;
     text-align: right;
-}
+  }
 
-.income-text:not(:placeholder-shown) + .income-placeholder,
-.income-text:focus + .income-placeholder {
+  .income-text:not(:placeholder-shown) + .income-placeholder,
+  .income-text:focus + .income-placeholder {
     top: -10px;
     font-size: 0.8rem;
-    background-color: #D9D9D9;
-    color: #7CD689;
-}
+    background-color: #d9d9d9;
+    color: #7cd689;
+  }
 
-.income-placeholder {
+  .income-placeholder {
     color: rgb(110, 110, 110);
     position: absolute;
     left: 10px;
@@ -41,31 +43,31 @@
     font-size: 0.9rem;
     transition: ease-in-out 0.3s;
     pointer-events: none;
-}
+  }
 
-.needs-percentage-container::after {
+  .needs-percentage-container::after {
     color: black;
-    content: '%';
+    content: "%";
     position: absolute;
     font-size: 1.2rem;
     right: 5px;
     top: 5px;
-}
+  }
 
-.needs-percentage-text {
+  .needs-percentage-text {
     color: black;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
     font-size: 1.2rem;
     box-sizing: border-box;
     outline: none;
-    border: 1px solid #7CD689;
+    border: 1px solid #7cd689;
     max-width: 150px;
     border-radius: 5px;
     text-align: right;
-}
+  }
 
-.needs-percentage-placeholder {
+  .needs-percentage-placeholder {
     color: rgb(110, 110, 110);
     position: absolute;
     left: 10px;
@@ -73,81 +75,77 @@
     font-size: 0.9rem;
     transition: ease-in-out 0.3s;
     pointer-events: none;
-}
+  }
 
-.needs-percentage-text:not(:placeholder-shown) + .needs-percentage-placeholder,
-.needs-percentage-text:focus + .needs-percentage-placeholder {
+  .needs-percentage-text:not(:placeholder-shown)
+    + .needs-percentage-placeholder,
+  .needs-percentage-text:focus + .needs-percentage-placeholder {
     top: -10px;
     font-size: 0.8rem;
-    background-color: #D9D9D9;
-    color: #7CD689;
-}
+    background-color: #d9d9d9;
+    color: #7cd689;
+  }
 
-.needs-total-budget, .total-remaining {
+  .needs-total-budget,
+  .total-remaining {
     color: black;
-}
+  }
 
-.over-budget {
+  .over-budget {
     color: red;
-}
+  }
 
-.lists-tracker {
+  .navigations {
+    color: black;
+    margin-left: 40%;
+  }
+
+  .lists-tracker {
     height: 68vh;
-}
+    width: 100vw;
+    border: 1px solid blue;
+    /* position: static; */
+    display: flex;
+  }
 
-.footer {
+  .lists-tracker > div:nth-child(1) {
+    border: 1px solid red;
+  }
+
+  .lists-tracker > div:nth-child(2) {
+    border: 1px solid yellow;
+  }
+
+  .footer {
     display: flex;
     justify-content: space-between;
     padding: 1rem 0.5rem;
-}
+  }
 
-.dl-buttons {
+  .dl-buttons {
     display: flex;
     justify-content: space-between;
     width: 45%;
-}
+  }
 
-.total-texts {
+  .total-texts {
     display: flex;
     flex-direction: row;
     width: 55%;
     color: black;
-}
+  }
 
-.total-labels {
+  .total-labels {
     width: 60%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-}
+  }
 
-.total-values {
+  .total-values {
     width: 40%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-}
-
-@media (max-width: 768px) {
-    .lists-tracker {
-      overflow: hidden;
-      position: relative;
-    }
-  
-    .lists-tracker > div {
-      width: 100%;
-      transition: transform 0.3s ease-in-out;
-    }
-  
-    .lists-tracker.needs {
-      transform: translateX(0%);
-    }
-  
-    .lists-tracker.wants {
-      transform: translateX(-100%);
-    }
-  
-    .lists-tracker.savings {
-      transform: translateX(-200%);
-    }
   }
+}
