@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./budgetplanner.css";
 import Divider from "../Utils/Divider";
-import NeedsLists from "../body/lists/Needs";
+import NeedsLists from "./lists/Needs";
 import WantsLists from "../body/lists/Wants";
 
 function BudgetPlanner() {
@@ -9,7 +9,6 @@ function BudgetPlanner() {
   const [needsPercentage, setNeedsPercentage] = useState("50");
   const [totalActual, setTotalActual] = useState(0);
   const [currentBudget, setCurrentBudget] = useState(0);
-  const [budgetData, setBudgetData] = useState({});
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, "");
