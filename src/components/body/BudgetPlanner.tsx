@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./budgetplanner.css";
 import Divider from "../Utils/Divider";
-import NeedsLists from "./lists/Needs";
-import WantsLists from "../body/lists/Wants";
+import NeedsLists from "./lists/needs";
+import WantsLists from "./lists/Wants";
 
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
@@ -15,6 +15,11 @@ function BudgetPlanner() {
     if (!isNaN(Number(value))) {
       setIncome(Number(value).toLocaleString());
     }
+
+    const elements = document.querySelectorAll(".needs-total-budget");
+    elements.forEach((element) => {
+      Number(value) > Number(totalActual) ? element?.classList.remove("over-budget") : element?.classList.add("over-budget");
+    });
   };
 
   const handleNeedsPercentageChange = (
