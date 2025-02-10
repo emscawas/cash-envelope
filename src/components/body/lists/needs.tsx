@@ -126,13 +126,13 @@ function NeedsLists({
 
   return (
     <div className="needs-lists-container">
-      <div className="btn-modal">
         <input
           type="button"
           value="+"
           onClick={handleAddClick}
           className="add-needs-button"
         />
+        <div>
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">

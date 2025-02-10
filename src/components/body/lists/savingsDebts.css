@@ -1,11 +1,11 @@
-.wants-lists-container {
+.sd-lists-container {
     display: flex;
     width: 100%;
     height: 100%;
     position: relative;
   }
   
-  .wants-lists {
+  .sd-lists {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -14,7 +14,7 @@
     margin: 0;
   }
   
-  .add-wants-button {
+  .add-sd-button {
     background-color: #6ec57b;
     color: white;
     height: 55px;
@@ -82,9 +82,9 @@
   }
   
   .modal-content-container {
-    padding: 10px 0 0 0;
+    /* padding: 10px 0 0 0; */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
   }
   
@@ -92,7 +92,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 15px 20px;
   }
   
   .modal-content-title {
@@ -103,7 +102,7 @@
   .modal-content-left,
   .modal-content-right {
     width: 50%;
-    padding: 0 10px;
+    padding: 15px 10px 10px;
   }
   
   .modal-content-right {
@@ -111,11 +110,11 @@
     flex-direction: column;
   }
   
-  .budget-container, .actual-container, .want-container, .description-container {
+  .budget-container, .actual-container, .sd-container, .description-container {
     position: relative;
   }
   
-  .want-name-text, .want-description-text, .modal-text {
+  .sd-name-text, .sd-description-text, .modal-text {
     color: black;
     background-color: #D9D9D9;
     font-size: 1.2rem;
@@ -128,7 +127,7 @@
     margin-bottom: 1rem;
   }
   
-  .want-name-label {
+  .sd-name-label {
     color: rgb(110, 110, 110);
     position: absolute;
     left: 10px;
@@ -138,15 +137,15 @@
     pointer-events: none;
   }
   
-  .want-name-text:not(:placeholder-shown) + .want-name-label,
-  .want-name-text:focus + .want-name-label {
+  .sd-name-text:not(:placeholder-shown) + .sd-name-label,
+  .sd-name-text:focus + .sd-name-label {
       top: -10px;
       font-size: 0.8rem;
       background-color: #D9D9D9;
       color: #7CD689;
   }
   
-  .want-description-label {
+  .sd-description-label {
     color: rgb(110, 110, 110);
     position: absolute;
     left: 10px;
@@ -156,8 +155,8 @@
     pointer-events: none;
   }
   
-  .want-description-text:not(:placeholder-shown) + .want-description-label,
-  .want-description-text:focus + .want-description-label {
+  .sd-description-text:not(:placeholder-shown) + .sd-description-label,
+  .sd-description-text:focus + .sd-description-label {
       top: -10px;
       font-size: 0.8rem;
       background-color: #D9D9D9;
@@ -223,14 +222,14 @@
     margin-top: 30px;
   }
   
-  .add-wants-list {
+  .add-sd-list {
     all: unset;
     width: 100%;
   }
   
-  /* wants list part */
+  /* sd list part */
   
-  .wants-item {
+  .sd-item {
     all: unset;
     color: black;
     display: flex;

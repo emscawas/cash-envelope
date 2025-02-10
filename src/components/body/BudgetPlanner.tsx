@@ -1,8 +1,36 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import "./budgetplanner.css";
 import Divider from "../Utils/Divider";
-import NeedsLists from "./lists/needs";
+import NeedsLists from "./lists/Needs";
 import WantsLists from "./lists/Wants";
+import SavingsDebtsList from "./lists/SavingsDebts";
+
+  //testing context usage here
+  interface BudgetItems {
+    budget: string;
+    actual: string;
+    name: string;
+    description: string;
+    id: number;
+  }
+
+  interface BudgetLists {
+    list: BudgetItems[];
+    addToList: (
+      childIndex: number, 
+      name: string, 
+      description: string,
+      budget: string,
+      actual: string,
+    ) => void;
+  }
+
+  export const BudgetContext = createContext<BudgetLists>({
+    list: [],
+    addToList: () => {}
+  }
+  )
+  // end
 
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
@@ -63,19 +91,30 @@ function BudgetPlanner() {
     return result.toLocaleString();
   };
 
-  const budgetPlannerBody = [<NeedsLists needsData={handleTotalActualChange} key="needs" />, <WantsLists wantsData={handleTotalActualChange} key="wants" />];
+  const budgetPlannerBody = [<NeedsLists needsData={handleTotalActualChange} key="needs" />, <WantsLists wantsData={handleTotalActualChange} key="wants" />, <SavingsDebtsList index={3} key="sd" />];
+
+  const title = (currentBudget: number) => {
+    switch (currentBudget) {
+      case 1:
+        return "Wants";
+      case 2:
+        return "Savings/Debts"
+      default:
+        return "Needs"
+    }
+  }
 
   const nextBudgetPlanner = () => {
     setCurrentBudget((prevIndex) => (prevIndex + 1) % budgetPlannerBody.length);
-    console.log("next")
   };
 
   const prevBudgetPlanner = () => {
     setCurrentBudget((prevIndex) =>
       prevIndex === 0 ? budgetPlannerBody.length - 1 : prevIndex - 1
     );
-    console.log("prev")
   };
+
+
 
   return (
     <div className="body">
@@ -112,17 +151,17 @@ function BudgetPlanner() {
             value="prev"
             onClick={prevBudgetPlanner}
           />
-        <span>{currentBudget == 0 ? "Needs" : "Wants"}</span>
+        <span>{title(currentBudget)}</span>
         <input 
-          type="button"
-          className="prev-button"
-          value="next"
-          onClick={nextBudgetPlanner}
+            type="button"
+            className="prev-button"
+            value="next"
+            onClick={nextBudgetPlanner}
         />
       </div>
       <Divider pixel="3" />
       {/* component for list of budgets allocated */}
-      <div className="lists-tracker">
+      <div className="lists-tracker" id="slider">
         {budgetPlannerBody[currentBudget]}
       </div>
       <Divider pixel="3" />
