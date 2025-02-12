@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useMemo } from "react";
 import "./budgetplanner.css";
 import Divider from "../Utils/Divider";
 import NeedsLists from "./lists/Needs";
@@ -37,6 +37,24 @@ function BudgetPlanner() {
   const [needsPercentage, setNeedsPercentage] = useState("50");
   const [totalActual, setTotalActual] = useState(0);
   const [currentBudget, setCurrentBudget] = useState(0);
+  const [list, setList] = useState<BudgetItems[]>([]);
+
+  // testing context usage here
+  const addToList = (
+    childIndex: number, 
+    name: string, 
+    description: string,
+    budget: string,
+    actual: string,
+  ) => {
+    setList((prevList) => [
+      ...prevList,
+      { id: childIndex, name, description, budget, actual }
+    ]);
+  };
+
+  const contextValue = useMemo(() => ({ list, addToList }), [list]);
+  // end
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, "");
@@ -98,11 +116,11 @@ function BudgetPlanner() {
       case 1:
         return "Wants";
       case 2:
-        return "Savings/Debts"
+        return "Savings/Debts";
       default:
-        return "Needs"
-    }
+        return "Needs";
   }
+}
 
   const nextBudgetPlanner = () => {
     setCurrentBudget((prevIndex) => (prevIndex + 1) % budgetPlannerBody.length);
@@ -117,6 +135,7 @@ function BudgetPlanner() {
 
 
   return (
+    <BudgetContext.Provider value={contextValue}>
     <div className="body">
       {/* make this component for budgetting forms */}
       <form className="budget-form">
@@ -182,6 +201,7 @@ function BudgetPlanner() {
         </div>
       </div>
     </div>
+    </BudgetContext.Provider>
   );
 }
 
