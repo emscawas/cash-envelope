@@ -8,7 +8,7 @@ interface SavingsDebtsProps {
 }
 
 function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
-  const { list, addToList } = useContext(BudgetContext);
+  const { list, addToList, editItem } = useContext(BudgetContext);
 
   const savingsDebtsObject = () => {
     let name = (document.querySelector(".sd-name-text") as HTMLInputElement)
@@ -26,10 +26,32 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
       description: description,
       budget: budget,
       actual: actual,
-    };;
+    };
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const handleEditClick = (index: number) => {
+    const item = list[index];
+
+    setIsEditMode(true);
+    // setCurrentIndex(index);
+    setIsModalOpen(true);
+
+    // editing for context
+    let name = (document.querySelector(".sd-name-text") as HTMLInputElement)
+      ?.value;
+    let description = (
+      document.querySelector(".sd-description-text") as HTMLInputElement
+    )?.value;
+    let budget = (document.querySelector(".budget-text") as HTMLInputElement)
+      ?.value;
+    let actual = (document.querySelector(".actual-text") as HTMLInputElement)
+      ?.value;
+
+    editItem(index, name, description, budget, actual)
+  };
 
   return (
     <div className="sd-lists-container">
@@ -60,14 +82,14 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                 {/* {isEditMode ? "Edit Need" : "Need Info"} */}
               </h2>
               <div style={{ width: "10%" }}>
-                {/* {isEditMode && (
+                {isEditMode && (
                   <button
                     className="delete-button"
                     // onClick={handleDeleteClick}
                     aria-label="Delete">
                     <img src={DeleteButton} alt="Delete" />
                   </button>
-                )} */}
+                )}
               </div>
             </div>
             <div className="modal-content-container">
@@ -116,8 +138,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                 <div className="submit-button-container">
                   <input
                     type="button"
-                    value="ADD"
-                    // value={isEditMode ? "EDIT" : "ADD"}
+                    value={isEditMode ? "EDIT" : "ADD"}
                     // onClick={handleFormSubmit}
                     onClick={() => {
                       const result = savingsDebtsObject();
@@ -144,7 +165,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
           <button
             key={`${item.name}-${index}`}
             className="needs-item"
-            // onClick={() => handleEditClick(index)}
+            onClick={() => handleEditClick(index)}
             tabIndex={0}>
             <div className="list-left">
               <span>Name: {item.name}</span>

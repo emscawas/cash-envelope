@@ -23,11 +23,18 @@ import SavingsDebtsList from "./lists/SavingsDebts";
       budget: string,
       actual: string,
     ) => void;
+    editItem: (
+      index: number, 
+      name: string, 
+      description: string, 
+      budget: string, 
+      actual: string) => void;
   }
 
   export const BudgetContext = createContext<BudgetLists>({
     list: [],
-    addToList: () => {}
+    addToList: () => {},
+    editItem: () => {}
   }
   )
   // end
@@ -53,7 +60,14 @@ function BudgetPlanner() {
     ]);
   };
 
-  const contextValue = useMemo(() => ({ list, addToList }), [list]);
+  const editItem = (index: number, name: string, description: string, budget: string, actual: string) => {
+    const updatedList = list.map((item, i) => (i === index ? { ...item, name, description, budget, actual } : item));
+    setList(updatedList);
+  };
+
+  console.log('parent list ', list)
+
+  const contextValue = useMemo(() => ({ list, addToList, editItem }), [list]);
   // end
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
