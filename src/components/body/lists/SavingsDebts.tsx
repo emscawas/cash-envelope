@@ -11,26 +11,37 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
   const { list, addToList, editItem } = useContext(BudgetContext);
 
   const savingsDebtsObject = () => {
-    let name = (document.querySelector(".sd-name-text") as HTMLInputElement)
-      ?.value;
-    let description = (
-      document.querySelector(".sd-description-text") as HTMLInputElement
-    )?.value;
-    let budget = (document.querySelector(".budget-text") as HTMLInputElement)
-      ?.value;
-    let actual = (document.querySelector(".actual-text") as HTMLInputElement)
-      ?.value;
+    // let name = (document.querySelector(".sd-name-text") as HTMLInputElement)
+    //   ?.value;
+    // let description = (
+    //   document.querySelector(".sd-description-text") as HTMLInputElement
+    // )?.value;
+    // let budget = (document.querySelector(".budget-text") as HTMLInputElement)
+    //   ?.value;
+    // let actual = (document.querySelector(".actual-text") as HTMLInputElement)
+    //   ?.value;
+
+    // return {
+    //   name: name,
+    //   description: description,
+    //   budget: budget,
+    //   actual: actual,
+    // };
 
     return {
       name: name,
       description: description,
       budget: budget,
       actual: actual,
-    };
+    }
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [budget, setBudget] = useState("")
+  const [actual, setActual] = useState("")
 
   const handleEditClick = (index: number) => {
     const item = list[index];
@@ -40,17 +51,10 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
     setIsModalOpen(true);
 
     // editing for context
-    let name = (document.querySelector(".sd-name-text") as HTMLInputElement)
-      ?.value;
-    let description = (
-      document.querySelector(".sd-description-text") as HTMLInputElement
-    )?.value;
-    let budget = (document.querySelector(".budget-text") as HTMLInputElement)
-      ?.value;
-    let actual = (document.querySelector(".actual-text") as HTMLInputElement)
-      ?.value;
-
-    editItem(index, name, description, budget, actual)
+    setName(item.name)
+    setDescription(item.description)
+    setBudget(item.budget)
+    setActual(item.actual)
   };
 
   return (
@@ -99,6 +103,8 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     type="text"
                     placeholder=""
                     className="sd-name-text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                   <span className="sd-name-label">Name</span>
                 </div>
@@ -108,6 +114,8 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     placeholder=""
                     maxLength={25}
                     rows={4}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                   <span className="sd-description-label">Description</span>
                 </div>
@@ -118,7 +126,8 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     type="text"
                     className="budget-text"
                     placeholder=""
-                    // value={budgetValue}
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
                     // onChange={handleBudgetValueChange}
                     maxLength={12}
                   />
@@ -129,7 +138,8 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     type="text"
                     className="actual-text"
                     placeholder=""
-                    // value={actualValue}
+                    value={actual}
+                    onChange={(e) => setActual(e.target.value)}
                     // onChange={handleActualValueChange}
                     maxLength={12}
                   />
@@ -142,13 +152,23 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     // onClick={handleFormSubmit}
                     onClick={() => {
                       const result = savingsDebtsObject();
-                      addToList(
-                        index,
-                        result.name,
-                        result.description,
-                        result.budget,
-                        result.actual
-                      );
+                      if (isEditMode) {
+                        editItem(
+                          index,
+                          result.name,
+                          result.description,
+                          result.budget,
+                          result.actual
+                        )
+                      } else {
+                        addToList(
+                          index,
+                          result.name,
+                          result.description,
+                          result.budget,
+                          result.actual
+                        );
+                      }
 
                       setIsModalOpen(false);
                     }}
