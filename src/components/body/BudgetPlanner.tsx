@@ -5,39 +5,39 @@ import NeedsLists from "./lists/Needs";
 import WantsLists from "./lists/Wants";
 import SavingsDebtsList from "./lists/SavingsDebts";
 
-  //testing context usage here
-  interface BudgetItems {
-    budget: string;
-    actual: string;
-    name: string;
-    description: string;
-    id: number;
-  }
+//testing context usage here
+interface BudgetItems {
+  budget: string;
+  actual: string;
+  name: string;
+  description: string;
+  id: number;
+}
 
-  interface BudgetLists {
-    list: BudgetItems[];
-    addToList: (
-      childIndex: number, 
-      name: string, 
-      description: string,
-      budget: string,
-      actual: string,
-    ) => void;
-    editItem: (
-      index: number, 
-      name: string, 
-      description: string, 
-      budget: string, 
-      actual: string) => void;
-  }
+interface BudgetLists {
+  list: BudgetItems[];
+  addToList: (
+    childIndex: number,
+    name: string,
+    description: string,
+    budget: string,
+    actual: string
+  ) => void;
+  editItem: (
+    index: number,
+    name: string,
+    description: string,
+    budget: string,
+    actual: string
+  ) => void;
+}
 
-  export const BudgetContext = createContext<BudgetLists>({
-    list: [],
-    addToList: () => {},
-    editItem: () => {}
-  }
-  )
-  // end
+export const BudgetContext = createContext<BudgetLists>({
+  list: [],
+  addToList: () => {},
+  editItem: () => {},
+});
+// end
 
 function BudgetPlanner() {
   const [income, setIncome] = useState("");
@@ -48,24 +48,32 @@ function BudgetPlanner() {
 
   // testing context usage here
   const addToList = (
-    childIndex: number, 
-    name: string, 
+    childIndex: number,
+    name: string,
     description: string,
     budget: string,
-    actual: string,
+    actual: string
   ) => {
     setList((prevList) => [
       ...prevList,
-      { id: childIndex, name, description, budget, actual }
+      { id: childIndex, name, description, budget, actual },
     ]);
   };
 
-  const editItem = (index: number, name: string, description: string, budget: string, actual: string) => {
-    const updatedList = list.map((item, i) => (i === index ? { ...item, name, description, budget, actual } : item));
+  const editItem = (
+    index: number,
+    name: string,
+    description: string,
+    budget: string,
+    actual: string
+  ) => {
+    const updatedList = list.map((item, i) =>
+      i === index ? { ...item, name, description, budget, actual } : item
+    );
     setList(updatedList);
   };
 
-  console.log('parent list ', list)
+  console.log("parent list ", list);
 
   const contextValue = useMemo(() => ({ list, addToList, editItem }), [list]);
   // end
@@ -78,7 +86,9 @@ function BudgetPlanner() {
 
     const elements = document.querySelectorAll(".needs-total-budget");
     elements.forEach((element) => {
-      Number(value) > Number(totalActual) ? element?.classList.remove("over-budget") : element?.classList.add("over-budget");
+      Number(value) > Number(totalActual)
+        ? element?.classList.remove("over-budget")
+        : element?.classList.add("over-budget");
     });
   };
 
@@ -105,9 +115,11 @@ function BudgetPlanner() {
     const elements = document.querySelectorAll(".needs-total-budget");
 
     elements.forEach((element) => {
-      total > Number(totalNeed) ? element?.classList.add("over-budget") : element?.classList.remove("over-budget");
+      total > Number(totalNeed)
+        ? element?.classList.add("over-budget")
+        : element?.classList.remove("over-budget");
     });
-    
+
     setTotalActual(total);
   };
 
@@ -117,13 +129,19 @@ function BudgetPlanner() {
     const result = totalNeeds - totalActual;
 
     elements.forEach((element) => {
-      result < 0 ? element?.classList.add("over-budget") : element?.classList.remove("over-budget");
+      result < 0
+        ? element?.classList.add("over-budget")
+        : element?.classList.remove("over-budget");
     });
 
     return result.toLocaleString();
   };
 
-  const budgetPlannerBody = [<NeedsLists needsData={handleTotalActualChange} key="needs" />, <WantsLists wantsData={handleTotalActualChange} key="wants" />, <SavingsDebtsList index={3} key="sd" />];
+  const budgetPlannerBody = [
+    <NeedsLists needsData={handleTotalActualChange} key="needs" />,
+    <WantsLists wantsData={handleTotalActualChange} key="wants" />,
+    <SavingsDebtsList index={2} key="sd" />,
+  ];
 
   const title = (currentBudget: number) => {
     switch (currentBudget) {
@@ -133,8 +151,8 @@ function BudgetPlanner() {
         return "Savings/Debts";
       default:
         return "Needs";
-  }
-}
+    }
+  };
 
   const nextBudgetPlanner = () => {
     setCurrentBudget((prevIndex) => (prevIndex + 1) % budgetPlannerBody.length);
@@ -146,75 +164,77 @@ function BudgetPlanner() {
     );
   };
 
-
-
   return (
     <BudgetContext.Provider value={contextValue}>
-    <div className="body">
-      {/* make this component for budgetting forms */}
-      <form className="budget-form">
-        <div className="income-container">
+      <div className="body">
+        {/* make this component for budgetting forms */}
+        <form className="budget-form">
+          <div className="income-container">
+            <input
+              type="text"
+              className="income-text"
+              placeholder=""
+              value={income}
+              onChange={handleIncomeChange}
+              maxLength={12}
+            />
+            <span className="income-placeholder">Total Income</span>
+          </div>
+          <div className="needs-percentage-container">
+            <input
+              type="text"
+              className="needs-percentage-text"
+              placeholder=""
+              value={needsPercentage}
+              onChange={handleNeedsPercentageChange}
+              maxLength={3}
+            />
+            <span className="needs-percentage-placeholder">Percentage</span>
+          </div>
+        </form>
+        <br />
+        <div className="navigations">
           <input
-            type="text"
-            className="income-text"
-            placeholder=""
-            value={income}
-            onChange={handleIncomeChange}
-            maxLength={12}
-          />
-          <span className="income-placeholder">Total Income</span>
-        </div>
-        <div className="needs-percentage-container">
-          <input
-            type="text"
-            className="needs-percentage-text"
-            placeholder=""
-            value={needsPercentage}
-            onChange={handleNeedsPercentageChange}
-            maxLength={3}
-          />
-          <span className="needs-percentage-placeholder">Percentage</span>
-        </div>
-      </form>
-      <br />
-      <div className="navigations">
-        <input 
             type="button"
             className="prev-button"
             value="prev"
             onClick={prevBudgetPlanner}
           />
-        <span>{title(currentBudget)}</span>
-        <input 
+          <span>{title(currentBudget)}</span>
+          <input
             type="button"
             className="prev-button"
             value="next"
             onClick={nextBudgetPlanner}
-        />
-      </div>
-      <Divider pixel="3" />
-      {/* component for list of budgets allocated */}
-      <div className="lists-tracker" id="slider">
-        {budgetPlannerBody[currentBudget]}
-      </div>
-      <Divider pixel="3" />
-      {/* component for footer */}
-      <div className="footer">
-        <div className="dl-buttons"></div>
-        <div className="total-texts">
-          <div className="total-labels">
-            <span className="total-needs">{needsPercentage}% of Needs:</span>
-            <span className="needs-total-budget">Total Actual:</span>
-            <span className="total-remaining">Remaining:</span>
-          </div>
-          <div className="total-values">
-            <span>{calculateTotalNeeds()}</span>
-            <span className="needs-total-budget">{totalActual.toLocaleString()}</span>
-            <span className="total-remaining">{calculateTotalRemaining()}</span>
+          />
+        </div>
+        <Divider pixel="3" />
+        {/* component for list of budgets allocated */}
+        <div className="lists-tracker" id="slider">
+          {budgetPlannerBody[currentBudget]}
+        </div>
+        <Divider pixel="3" />
+        {/* component for footer */}
+        <div className="footer">
+          <div className="dl-buttons"></div>
+          <div className="total-texts">
+            <div className="total-labels">
+              <span className="total-needs">{needsPercentage}% of Needs:</span>
+              <span className="needs-total-budget">Total Actual:</span>
+              <span className="total-remaining">Remaining:</span>
+            </div>
+            <div className="total-values">
+              <span>{calculateTotalNeeds()}</span>
+              <span className="needs-total-budget">
+                {totalActual.toLocaleString()}
+              </span>
+              <span className="total-remaining">
+                {calculateTotalRemaining()}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </BudgetContext.Provider>
   );
 }

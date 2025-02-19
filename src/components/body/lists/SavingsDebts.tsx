@@ -11,50 +11,32 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
   const { list, addToList, editItem } = useContext(BudgetContext);
 
   const savingsDebtsObject = () => {
-    // let name = (document.querySelector(".sd-name-text") as HTMLInputElement)
-    //   ?.value;
-    // let description = (
-    //   document.querySelector(".sd-description-text") as HTMLInputElement
-    // )?.value;
-    // let budget = (document.querySelector(".budget-text") as HTMLInputElement)
-    //   ?.value;
-    // let actual = (document.querySelector(".actual-text") as HTMLInputElement)
-    //   ?.value;
-
-    // return {
-    //   name: name,
-    //   description: description,
-    //   budget: budget,
-    //   actual: actual,
-    // };
-
     return {
       name: name,
       description: description,
       budget: budget,
       actual: actual,
-    }
+    };
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [budget, setBudget] = useState("")
-  const [actual, setActual] = useState("")
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [budget, setBudget] = useState("");
+  const [actual, setActual] = useState("");
 
   const handleEditClick = (index: number) => {
     const item = list[index];
 
     setIsEditMode(true);
-    // setCurrentIndex(index);
     setIsModalOpen(true);
 
     // editing for context
-    setName(item.name)
-    setDescription(item.description)
-    setBudget(item.budget)
-    setActual(item.actual)
+    setName(item.name);
+    setDescription(item.description);
+    setBudget(item.budget);
+    setActual(item.actual);
   };
 
   return (
@@ -64,6 +46,12 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
         value="+"
         onClick={() => {
           setIsModalOpen(true);
+          if (!isEditMode) {
+            setName("");
+            setDescription("");
+            setBudget("");
+            setActual("");
+          }
         }}
         // onClick={handleAddClick}
         className="add-needs-button"
@@ -76,6 +64,11 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                 className="close-button"
                 onClick={() => {
                   setIsModalOpen(false);
+                  setName("");
+                  setDescription("");
+                  setBudget("");
+                  setActual("");
+                  setIsEditMode(false);
                 }}
                 // onClick={handleCloseModal}
                 aria-label="Close">
@@ -159,7 +152,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                           result.description,
                           result.budget,
                           result.actual
-                        )
+                        );
                       } else {
                         addToList(
                           index,
@@ -170,6 +163,11 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                         );
                       }
 
+                      setName("");
+                      setDescription("");
+                      setBudget("");
+                      setActual("");
+                      setIsEditMode(false);
                       setIsModalOpen(false);
                     }}
                     className="add-needs-list"
