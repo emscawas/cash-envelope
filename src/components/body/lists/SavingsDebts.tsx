@@ -12,6 +12,8 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
 
   const savingsDebtsObject = () => {
     return {
+      id: id,
+      parentId: index,
       name: name,
       description: description,
       budget: budget,
@@ -21,6 +23,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [id, setId] = useState(1)
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [budget, setBudget] = useState("");
@@ -75,8 +78,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                 &times;
               </button>
               <h2 className="modal-content-title">
-                Savings / Debts
-                {/* {isEditMode ? "Edit Need" : "Need Info"} */}
+                {isEditMode ? "Edit Savings / Debts" : "Savings / Debts"}
               </h2>
               <div style={{ width: "10%" }}>
                 {isEditMode && (
@@ -147,7 +149,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                       const result = savingsDebtsObject();
                       if (isEditMode) {
                         editItem(
-                          index,
+                          result.id,
                           result.name,
                           result.description,
                           result.budget,
@@ -155,12 +157,14 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                         );
                       } else {
                         addToList(
-                          index,
+                          result.id,
+                          result.parentId,
                           result.name,
                           result.description,
                           result.budget,
                           result.actual
                         );
+                        setId(id + 1)
                       }
 
                       setName("");

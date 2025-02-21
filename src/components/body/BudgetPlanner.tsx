@@ -17,14 +17,15 @@ interface BudgetItems {
 interface BudgetLists {
   list: BudgetItems[];
   addToList: (
-    childIndex: number,
+    id: number,
+    parentIndex: number,
     name: string,
     description: string,
     budget: string,
     actual: string
   ) => void;
   editItem: (
-    index: number,
+    id: number,
     name: string,
     description: string,
     budget: string,
@@ -48,7 +49,8 @@ function BudgetPlanner() {
 
   // testing context usage here
   const addToList = (
-    childIndex: number,
+    id: number,
+    parentIndex: number,
     name: string,
     description: string,
     budget: string,
@@ -56,19 +58,20 @@ function BudgetPlanner() {
   ) => {
     setList((prevList) => [
       ...prevList,
-      { id: childIndex, name, description, budget, actual },
+      { id, parentId: parentIndex, name, description, budget, actual },
     ]);
   };
 
   const editItem = (
-    index: number,
+    id: number,
     name: string,
     description: string,
     budget: string,
     actual: string
   ) => {
+    console.log('list', list)
     const updatedList = list.map((item, i) =>
-      i === index ? { ...item, name, description, budget, actual } : item
+      i == id ? { ...item, name, description, budget, actual } : item
     );
     setList(updatedList);
   };
