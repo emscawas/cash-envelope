@@ -8,7 +8,7 @@ interface SavingsDebtsProps {
 }
 
 function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
-  const { list, addToList, editItem } = useContext(BudgetContext);
+  const { list, addToList, editItem, deleteItem } = useContext(BudgetContext);
 
   const savingsDebtsObject = () => {
     return {
@@ -86,6 +86,11 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                   <button
                     className="delete-button"
                     // onClick={handleDeleteClick}
+                    onClick={() => {
+                      deleteItem(id);
+                      setIsModalOpen(false);
+                      setIsEditMode(false);
+                    }}
                     aria-label="Delete">
                     <img src={DeleteButton} alt="Delete" />
                   </button>

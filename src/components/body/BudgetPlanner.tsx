@@ -31,12 +31,14 @@ interface BudgetLists {
     budget: string,
     actual: string
   ) => void;
+  deleteItem: (id: number) => void;
 }
 
 export const BudgetContext = createContext<BudgetLists>({
   list: [],
   addToList: () => {},
   editItem: () => {},
+  deleteItem: () => {},
 });
 // end
 
@@ -75,7 +77,14 @@ function BudgetPlanner() {
     setList(updatedList);
   };
 
-  const contextValue = useMemo(() => ({ list, addToList, editItem }), [list]);
+  const deleteItem = (id: number) => {
+    if (id !== null) {
+      const updatedList = list.filter((item) => item.id !== id);
+      setList(updatedList);
+    }
+  };
+
+  const contextValue = useMemo(() => ({ list, addToList, editItem, deleteItem }), [list]);
   // end
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
