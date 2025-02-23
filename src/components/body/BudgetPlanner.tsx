@@ -69,14 +69,11 @@ function BudgetPlanner() {
     budget: string,
     actual: string
   ) => {
-    console.log('list', list)
-    const updatedList = list.map((item, i) =>
-      i == id ? { ...item, name, description, budget, actual } : item
+    const updatedList = list.map((item) =>
+      item.id === id ? { ...item, name, description, budget, actual } : item
     );
     setList(updatedList);
   };
-
-  console.log("parent list ", list);
 
   const contextValue = useMemo(() => ({ list, addToList, editItem }), [list]);
   // end

@@ -36,6 +36,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
     setIsModalOpen(true);
 
     // editing for context
+    setId(item.id);
     setName(item.name);
     setDescription(item.description);
     setBudget(item.budget);
@@ -149,7 +150,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                       const result = savingsDebtsObject();
                       if (isEditMode) {
                         editItem(
-                          result.id,
+                          id,
                           result.name,
                           result.description,
                           result.budget,
@@ -157,7 +158,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                         );
                       } else {
                         addToList(
-                          result.id,
+                          id,
                           result.parentId,
                           result.name,
                           result.description,
