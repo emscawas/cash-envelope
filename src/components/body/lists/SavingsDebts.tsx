@@ -23,11 +23,30 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [id, setId] = useState(1)
+  const [id, setId] = useState(1);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [budget, setBudget] = useState("");
   const [actual, setActual] = useState("");
+
+  const handleAddClick = () => {
+    setIsModalOpen(true);
+    if (!isEditMode) {
+      setName("");
+      setDescription("");
+      setBudget("");
+      setActual("");
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setName("");
+    setDescription("");
+    setBudget("");
+    setActual("");
+    setIsEditMode(false);
+  };
 
   const handleEditClick = (index: number) => {
     const item = list[index];
@@ -43,21 +62,61 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
     setActual(item.actual);
   };
 
+  const handleDeleteClick = () => {
+    deleteItem(id);
+    setIsModalOpen(false);
+    setIsEditMode(false);
+  };
+
+  const handleBudgetValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/,/g, "");
+    if (!isNaN(Number(value))) {
+      setBudget(Number(value).toLocaleString());
+    }
+  };
+  const handleActualValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/,/g, "");
+    if (!isNaN(Number(value))) {
+      setActual(Number(value).toLocaleString());
+    }
+  };
+
+  const handleFormSubmit = () => {
+    const result = savingsDebtsObject();
+    if (isEditMode) {
+      editItem(
+        id,
+        result.name,
+        result.description,
+        result.budget,
+        result.actual
+      );
+    } else {
+      addToList(
+        id,
+        result.parentId,
+        result.name,
+        result.description,
+        result.budget,
+        result.actual
+      );
+      setId(id + 1);
+    }
+
+    setName("");
+    setDescription("");
+    setBudget("");
+    setActual("");
+    setIsEditMode(false);
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="sd-lists-container">
       <input
         type="button"
         value="+"
-        onClick={() => {
-          setIsModalOpen(true);
-          if (!isEditMode) {
-            setName("");
-            setDescription("");
-            setBudget("");
-            setActual("");
-          }
-        }}
-        // onClick={handleAddClick}
+        onClick={handleAddClick}
         className="add-needs-button"
       />
       {isModalOpen && (
@@ -66,15 +125,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
             <div className="top-modal-buttons">
               <button
                 className="close-button"
-                onClick={() => {
-                  setIsModalOpen(false);
-                  setName("");
-                  setDescription("");
-                  setBudget("");
-                  setActual("");
-                  setIsEditMode(false);
-                }}
-                // onClick={handleCloseModal}
+                onClick={handleCloseModal}
                 aria-label="Close">
                 &times;
               </button>
@@ -85,12 +136,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                 {isEditMode && (
                   <button
                     className="delete-button"
-                    // onClick={handleDeleteClick}
-                    onClick={() => {
-                      deleteItem(id);
-                      setIsModalOpen(false);
-                      setIsEditMode(false);
-                    }}
+                    onClick={handleDeleteClick}
                     aria-label="Delete">
                     <img src={DeleteButton} alt="Delete" />
                   </button>
@@ -128,8 +174,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     className="budget-text"
                     placeholder=""
                     value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    // onChange={handleBudgetValueChange}
+                    onChange={handleBudgetValueChange}
                     maxLength={12}
                   />
                   <span className="budget-value-label">Budget</span>
@@ -140,8 +185,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     className="actual-text"
                     placeholder=""
                     value={actual}
-                    onChange={(e) => setActual(e.target.value)}
-                    // onChange={handleActualValueChange}
+                    onChange={handleActualValueChange}
                     maxLength={12}
                   />
                   <span className="actual-value-label">Actual</span>
@@ -150,36 +194,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                   <input
                     type="button"
                     value={isEditMode ? "EDIT" : "ADD"}
-                    // onClick={handleFormSubmit}
-                    onClick={() => {
-                      const result = savingsDebtsObject();
-                      if (isEditMode) {
-                        editItem(
-                          id,
-                          result.name,
-                          result.description,
-                          result.budget,
-                          result.actual
-                        );
-                      } else {
-                        addToList(
-                          id,
-                          result.parentId,
-                          result.name,
-                          result.description,
-                          result.budget,
-                          result.actual
-                        );
-                        setId(id + 1)
-                      }
-
-                      setName("");
-                      setDescription("");
-                      setBudget("");
-                      setActual("");
-                      setIsEditMode(false);
-                      setIsModalOpen(false);
-                    }}
+                    onClick={handleFormSubmit}
                     className="add-needs-list"
                   />
                 </div>
