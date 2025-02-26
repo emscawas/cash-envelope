@@ -68,16 +68,13 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
     setIsEditMode(false);
   };
 
-  const handleBudgetValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
     const value = e.target.value.replace(/,/g, "");
     if (!isNaN(Number(value))) {
-      setBudget(Number(value).toLocaleString());
-    }
-  };
-  const handleActualValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/,/g, "");
-    if (!isNaN(Number(value))) {
-      setActual(Number(value).toLocaleString());
+      setState(Number(value).toLocaleString());
     }
   };
 
@@ -132,10 +129,10 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
               <h2 className="modal-content-title">
                 {isEditMode ? "Edit Savings / Debts" : "Savings / Debts"}
               </h2>
-              <div style={{ width: "10%" }}>
+              <div className="delete-button">
                 {isEditMode && (
                   <button
-                    className="delete-button"
+                    className="delete-button-icon"
                     onClick={handleDeleteClick}
                     aria-label="Delete">
                     <img src={DeleteButton} alt="Delete" />
@@ -174,7 +171,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     className="budget-text"
                     placeholder=""
                     value={budget}
-                    onChange={handleBudgetValueChange}
+                    onChange={(e) => handleValueChange(e, setBudget)}
                     maxLength={12}
                   />
                   <span className="budget-value-label">Budget</span>
@@ -185,7 +182,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     className="actual-text"
                     placeholder=""
                     value={actual}
-                    onChange={handleActualValueChange}
+                    onChange={(e) => handleValueChange(e, setActual)}
                     maxLength={12}
                   />
                   <span className="actual-value-label">Actual</span>

@@ -63,8 +63,14 @@
   }
   
   .delete-button {
+    width: 10%;
+    height: 100%;
+  }
+
+  .delete-button-icon {
     all: unset;
     cursor: pointer;
+    padding-top: 12px;
   }
   
   .close-button {
