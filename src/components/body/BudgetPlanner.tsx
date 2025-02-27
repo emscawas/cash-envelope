@@ -119,7 +119,7 @@ function BudgetPlanner() {
     return totalCalculatedValue.toLocaleString();
   };
 
-  const handleTotalActualChange = (total: number, lists: object) => {
+  const handleTotalActualChange = (total: number) => {
     const totalNeed = calculateTotalNeeds().replace(/,/g, "");
     const elements = document.querySelectorAll(".needs-total-budget");
 
@@ -131,6 +131,16 @@ function BudgetPlanner() {
 
     setTotalActual(total);
   };
+
+  const handleTotalActualChangeV2 = () => {
+    const totalActual = list.reduce((sum, list) => {
+      const actual = isNaN(Number(list.actual)) ? list.actual.replace(/,/g, "") : list.actual;
+
+      return sum + Number(actual)
+    }, 0)
+
+    return totalActual;
+  }
 
   const calculateTotalRemaining = () => {
     const totalNeeds = Number(calculateTotalNeeds().replace(/,/g, ""));
@@ -235,8 +245,11 @@ function BudgetPlanner() {
             <div className="total-values">
               <span>{calculateTotalNeeds()}</span>
               <span className="needs-total-budget">
-                {totalActual.toLocaleString()}
+                {handleTotalActualChangeV2().toLocaleString()}
               </span>
+              {/* <span className="needs-total-budget">
+                {totalActual.toLocaleString()}
+              </span> */}
               <span className="total-remaining">
                 {calculateTotalRemaining()}
               </span>
