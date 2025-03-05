@@ -10,6 +10,8 @@ interface SavingsDebtsProps {
 function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
   const { list, addToList, editItem, deleteItem } = useContext(BudgetContext);
 
+  const filteredList = list.filter((item) => item.parentIndex === index);
+
   const savingsDebtsObject = () => {
     return {
       id: id,
@@ -48,18 +50,20 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
     setIsEditMode(false);
   };
 
-  const handleEditClick = (index: number) => {
-    const item = list[index];
+  const handleEditClick = (id: number) => {
+    const item = list.find((item) => item.id === id);
 
-    setIsEditMode(true);
-    setIsModalOpen(true);
+    if (item) {
+      setIsEditMode(true);
+      setIsModalOpen(true);
 
-    // editing for context
-    setId(item.id);
-    setName(item.name);
-    setDescription(item.description);
-    setBudget(item.budget);
-    setActual(item.actual);
+      // editing for context
+      setId(item.id);
+      setName(item.name);
+      setDescription(item.description);
+      setBudget(item.budget);
+      setActual(item.actual);
+    }
   };
 
   const handleDeleteClick = () => {
@@ -114,7 +118,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
         type="button"
         value="+"
         onClick={handleAddClick}
-        className="add-needs-button"
+        className="add-sd-button"
       />
       {isModalOpen && (
         <div className="modal">
@@ -192,7 +196,7 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
                     type="button"
                     value={isEditMode ? "EDIT" : "ADD"}
                     onClick={handleFormSubmit}
-                    className="add-needs-list"
+                    className="add-sd-list"
                   />
                 </div>
               </div>
@@ -201,22 +205,26 @@ function SavingsDebtsList({ index }: Readonly<SavingsDebtsProps>) {
         </div>
       )}
       <div className="sd-lists">
-        {list.map((item, index) => (
-          <button
-            key={`${item.name}-${index}`}
-            className="needs-item"
-            onClick={() => handleEditClick(index)}
-            tabIndex={0}>
-            <div className="list-left">
-              <span>Name: {item.name}</span>
-              <span>Description: {item.description}</span>
-            </div>
-            <div className="list-right">
-              <span>Budget: {item.budget}</span>
-              <span>Actual: {item.actual}</span>
-            </div>
-          </button>
-        ))}
+        {filteredList.length > 0 ? (
+          filteredList.map((item: any, index: number) => (
+            <button
+              key={`${item.name}-${index}`}
+              className="sd-item"
+              onClick={() => handleEditClick(item.id)}
+              tabIndex={0}>
+              <div className="list-left">
+                <span>Name: {item.name}</span>
+                <span>Description: {item.description}</span>
+              </div>
+              <div className="list-right">
+                <span>Budget: {item.budget}</span>
+                <span>Actual: {item.actual}</span>
+              </div>
+            </button>
+          ))
+        ) : (
+          <span>Click + to add items.</span>
+        )}
       </div>
     </div>
   );
