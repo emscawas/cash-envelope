@@ -1,7 +1,7 @@
 import React, { createContext, useState, useMemo } from "react";
 import "./budgetplanner.css";
 import Divider from "../Utils/Divider";
-import NeedsLists from "./lists/needs";
+import NeedsLists from "./lists/Needs";
 import WantsLists from "./lists/Wants";
 import SavingsDebtsList from "./lists/SavingsDebts";
 
@@ -159,7 +159,7 @@ function BudgetPlanner() {
 
   const budgetPlannerBody = [
     <NeedsLists index={0} key="needs" />,
-    <WantsLists wantsData={handleTotalActualChange} key="wants" />,
+    <WantsLists index={1} key="wants" />,
     <SavingsDebtsList index={2} key="sd" />,
   ];
 
