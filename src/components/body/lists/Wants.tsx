@@ -11,6 +11,7 @@ function WantsList({ index }: Readonly<WantsProps>) {
   const { list, addToList, editItem, deleteItem } = useContext(BudgetContext);
   
   const filteredList = list.filter((item) => item.parentIndex === index);
+  const newId = (list[list.length - 1]?.id || 0) + 1;
 
   const wantsObject = () => {
     return {
@@ -94,14 +95,13 @@ function WantsList({ index }: Readonly<WantsProps>) {
       );
     } else {
       addToList(
-        id,
+        newId,
         result.parentId,
         result.name,
         result.description,
         result.budget,
         result.actual
       );
-      setId(id + 1);
     }
 
     setName("");
