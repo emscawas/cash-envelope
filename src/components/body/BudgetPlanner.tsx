@@ -32,7 +32,7 @@ interface BudgetLists {
     budget: string,
     actual: string
   ) => void;
-  deleteItem: (id: number) => void;
+  deleteItem: (id: number, parentIndex: number) => void;
 }
 
 export const BudgetContext = createContext<BudgetLists>({
@@ -78,8 +78,8 @@ function BudgetPlanner() {
     setList(updatedList);
   };
 
-  const deleteItem = (id: number) => {
-    if (id !== null) {
+  const deleteItem = (id: number, parentIndex: number) => {
+    if (id !== null && currentBudget === parentIndex) {
       const updatedList = list.filter((item) => item.id !== id);
       setList(updatedList);
     }
@@ -134,7 +134,8 @@ function BudgetPlanner() {
   };
 
   const handleTotalActualChangeV2 = () => {
-    const totalActual = list.reduce((sum, list) => {
+    const activeBudget = list.filter((item) => item.parentIndex === currentBudget)
+    const totalActual = activeBudget.reduce((sum, list) => {
       const actual = isNaN(Number(list.actual)) ? list.actual.replace(/,/g, "") : list.actual;
 
       return sum + Number(actual)

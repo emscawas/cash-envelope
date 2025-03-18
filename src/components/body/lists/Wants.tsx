@@ -11,7 +11,7 @@ function WantsList({ index }: Readonly<WantsProps>) {
   const { list, addToList, editItem, deleteItem } = useContext(BudgetContext);
   
   const filteredList = list.filter((item) => item.parentIndex === index);
-  const newId = (list[list.length - 1]?.id || 0) + 1;
+  const newId = (filteredList[filteredList.length - 1]?.id || 0) + 1;
 
   const wantsObject = () => {
     return {
@@ -68,7 +68,7 @@ function WantsList({ index }: Readonly<WantsProps>) {
   };
 
   const handleDeleteClick = () => {
-    deleteItem(id);
+    deleteItem(id, index);
     setIsModalOpen(false);
     setIsEditMode(false);
   };
