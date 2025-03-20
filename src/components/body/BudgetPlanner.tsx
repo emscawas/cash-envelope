@@ -79,8 +79,8 @@ function BudgetPlanner() {
   };
 
   const deleteItem = (id: number, parentIndex: number) => {
-    if (id !== null && currentBudget === parentIndex) {
-      const updatedList = list.filter((item) => item.id !== id);
+    if (id !== null && parentIndex !== null) {
+      const updatedList = list.filter((item) => !(item.id === id && item.parentIndex === parentIndex));
       setList(updatedList);
     }
   };
@@ -120,18 +120,18 @@ function BudgetPlanner() {
     return totalCalculatedValue.toLocaleString();
   };
 
-  const handleTotalActualChange = (total: number) => {
-    const totalNeed = calculateTotalNeeds().replace(/,/g, "");
-    const elements = document.querySelectorAll(".needs-total-budget");
+  // const handleTotalActualChange = (total: number) => {
+  //   const totalNeed = calculateTotalNeeds().replace(/,/g, "");
+  //   const elements = document.querySelectorAll(".needs-total-budget");
 
-    elements.forEach((element) => {
-      total > Number(totalNeed)
-        ? element?.classList.add("over-budget")
-        : element?.classList.remove("over-budget");
-    });
+  //   elements.forEach((element) => {
+  //     total > Number(totalNeed)
+  //       ? element?.classList.add("over-budget")
+  //       : element?.classList.remove("over-budget");
+  //   });
 
-    setTotalActual(total);
-  };
+  //   setTotalActual(total);
+  // };
 
   const handleTotalActualChangeV2 = () => {
     const activeBudget = list.filter((item) => item.parentIndex === currentBudget)
@@ -144,11 +144,26 @@ function BudgetPlanner() {
     return totalActual;
   }
 
-  const calculateTotalRemaining = () => {
-    const totalNeeds = Number(calculateTotalNeeds().replace(/,/g, ""));
-    const elements = document.querySelectorAll(".total-remaining");
-    const result = totalNeeds - totalActual;
+  // const calculateTotalRemaining = () => {
+  //   const totalNeeds = Number(calculateTotalNeeds().replace(/,/g, ""));
+  //   const elements = document.querySelectorAll(".total-remaining");
+  //   const result = totalNeeds - totalActual;
 
+  //   elements.forEach((element) => {
+  //     result < 0
+  //       ? element?.classList.add("over-budget")
+  //       : element?.classList.remove("over-budget");
+  //   });
+
+  //   return result.toLocaleString();
+  // };
+
+  const calculateTotalRemainingv2 = () => {
+    const totalPercentageValue = Number(calculateTotalNeeds().replace(/,/g, ""))
+    const totalActiveBudget = handleTotalActualChangeV2()
+    const result = totalPercentageValue - totalActiveBudget
+
+    const elements = document.querySelectorAll(".total-remaining");
     elements.forEach((element) => {
       result < 0
         ? element?.classList.add("over-budget")
@@ -156,7 +171,7 @@ function BudgetPlanner() {
     });
 
     return result.toLocaleString();
-  };
+  }
 
   const budgetPlannerBody = [
     <NeedsLists index={0} key="needs" />,
@@ -253,7 +268,7 @@ function BudgetPlanner() {
                 {totalActual.toLocaleString()}
               </span> */}
               <span className="total-remaining">
-                {calculateTotalRemaining()}
+                {calculateTotalRemainingv2()}
               </span>
             </div>
           </div>
