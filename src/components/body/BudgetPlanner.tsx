@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo } from "react";
+import React, { createContext, useState, useMemo, useEffect } from "react";
 import "./budgetplanner.css";
 import Divider from "../Utils/Divider";
 import NeedsLists from "./lists/Needs";
@@ -44,11 +44,13 @@ export const BudgetContext = createContext<BudgetLists>({
 // end
 
 function BudgetPlanner() {
+  const defaultPercentages = ["50", "30", "20"];
   const [income, setIncome] = useState("");
-  const [needsPercentage, setNeedsPercentage] = useState("50");
+  const [budgetsPercentage, setBudgetsPercentage] = useState(defaultPercentages[0]);
   const [totalActual, setTotalActual] = useState(0);
   const [currentBudget, setCurrentBudget] = useState(0);
   const [list, setList] = useState<BudgetItems[]>([]);
+  const [budgetsPercentages, setBudgetsPercentages] = useState(defaultPercentages);
 
   // testing context usage here
   const addToList = (
@@ -88,6 +90,10 @@ function BudgetPlanner() {
   const contextValue = useMemo(() => ({ list, addToList, editItem, deleteItem }), [list]);
   // end
 
+  useEffect(() => {
+    setBudgetsPercentage(budgetsPercentages[currentBudget]);
+  }, [currentBudget, budgetsPercentages]);
+
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, "");
     if (!isNaN(Number(value))) {
@@ -102,21 +108,26 @@ function BudgetPlanner() {
     });
   };
 
-  const handleNeedsPercentageChange = (
+  const handleBudgetsPercentageChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value.replace(/%/g, "");
     if ((!isNaN(Number(value)) && Number(value) <= 100) || value === "") {
-      setNeedsPercentage(value);
+      setBudgetsPercentage(value);
+      setBudgetsPercentages((prev) => {
+        const newPercentages = [...prev];
+        newPercentages[currentBudget] = value;
+        return newPercentages;
+      });
     }
   };
 
   const calculateTotalNeeds = () => {
     const totalIncome = Number(income.replace(/,/g, ""));
-    const needsPercentageValue =
-      Number(needsPercentage.replace(/%/g, "")) / 100;
+    const budgetsPercentageValue =
+      Number(budgetsPercentage.replace(/%/g, "")) / 100;
     const totalCalculatedValue =
-      Math.round(totalIncome * needsPercentageValue * 100) / 100;
+      Math.round(totalIncome * budgetsPercentageValue * 100) / 100;
     return totalCalculatedValue.toLocaleString();
   };
 
@@ -221,8 +232,8 @@ function BudgetPlanner() {
               type="text"
               className="needs-percentage-text"
               placeholder=""
-              value={needsPercentage}
-              onChange={handleNeedsPercentageChange}
+              value={budgetsPercentage}
+              onChange={handleBudgetsPercentageChange}
               maxLength={3}
             />
             <span className="needs-percentage-placeholder">Percentage</span>
@@ -255,7 +266,7 @@ function BudgetPlanner() {
           <div className="dl-buttons"></div>
           <div className="total-texts">
             <div className="total-labels">
-              <span className="total-needs">{needsPercentage}% of Needs:</span>
+              <span className="total-needs">{budgetsPercentage}% of {title(currentBudget)}:</span>
               <span className="needs-total-budget">Total Actual:</span>
               <span className="total-remaining">Remaining:</span>
             </div>
