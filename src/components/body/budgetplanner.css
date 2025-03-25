@@ -10,8 +10,9 @@
   }
 
   .income-container,
-  .needs-percentage-container {
+  .percentage-container {
     position: relative;
+    pointer-events: none;
   }
 
   .income-text {
@@ -45,7 +46,7 @@
     pointer-events: none;
   }
 
-  .needs-percentage-container::after {
+  .percentage-container::after {
     color: black;
     content: "%";
     position: absolute;
@@ -54,7 +55,7 @@
     top: 5px;
   }
 
-  .needs-percentage-text {
+  .percentage-text {
     color: black;
     background-color: #d9d9d9;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
@@ -67,7 +68,7 @@
     text-align: right;
   }
 
-  .needs-percentage-placeholder {
+  .percentage-placeholder {
     color: rgb(110, 110, 110);
     position: absolute;
     left: 10px;
@@ -77,9 +78,9 @@
     pointer-events: none;
   }
 
-  .needs-percentage-text:not(:placeholder-shown)
-    + .needs-percentage-placeholder,
-  .needs-percentage-text:focus + .needs-percentage-placeholder {
+  .percentage-text:not(:placeholder-shown)
+    + .percentage-placeholder,
+  .percentage-text:focus + .percentage-placeholder {
     top: -10px;
     font-size: 0.8rem;
     background-color: #d9d9d9;
@@ -99,6 +100,23 @@
     color: black;
     display: flex;
     justify-content: space-between;
+    padding: 0 0.5rem;
+  }
+
+  .navigations input {
+    background-color: #6ec57b;
+    color: white;
+    cursor: pointer;
+    border: none;
+    width: 3rem;
+  }
+
+  .prev-button {
+    border-radius: 10px 0 0 10px;
+  }
+
+  .next-button {
+    border-radius: 0 10px 10px 0;
   }
 
   .lists-tracker {

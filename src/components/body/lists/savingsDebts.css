@@ -88,7 +88,6 @@
   }
   
   .modal-content-container {
-    /* padding: 10px 0 0 0; */
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -123,6 +122,7 @@
   .sd-name-text, .sd-description-text, .modal-text {
     color: black;
     background-color: #D9D9D9;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     font-size: 1.2rem;
     box-sizing: border-box;
     outline: none;
@@ -131,6 +131,7 @@
     border-radius: 5px;
     padding: 0.5rem 1.5rem 0.5rem 0.5rem;
     margin-bottom: 1rem;
+    resize: none;
   }
   
   .sd-name-label {

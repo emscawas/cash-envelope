@@ -227,16 +227,16 @@ function BudgetPlanner() {
             />
             <span className="income-placeholder">Total Income</span>
           </div>
-          <div className="needs-percentage-container">
+          <div className="percentage-container">
             <input
               type="text"
-              className="needs-percentage-text"
+              className="percentage-text"
               placeholder=""
               value={budgetsPercentage}
               onChange={handleBudgetsPercentageChange}
               maxLength={3}
             />
-            <span className="needs-percentage-placeholder">Percentage</span>
+            <span className="percentage-placeholder">Percentage</span>
           </div>
         </form>
         <br />
@@ -244,14 +244,14 @@ function BudgetPlanner() {
           <input
             type="button"
             className="prev-button"
-            value="prev"
+            value="<"
             onClick={prevBudgetPlanner}
           />
           <span>{title(currentBudget)}</span>
           <input
             type="button"
-            className="prev-button"
-            value="next"
+            className="next-button"
+            value=">"
             onClick={nextBudgetPlanner}
           />
         </div>
