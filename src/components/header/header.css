@@ -10,5 +10,23 @@
     display: flex;
     justify-content: space-between;
     width: 150px;
-    /* border: 2px solid black; */
+}
+
+@media (min-width: 768px) {
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        background-color: #7CD689;
+        padding: 0 2rem;
+    }
+
+    .header h2 {
+        width: 60%;
+        text-wrap: nowrap;
+    }
+
+    .date {
+        width: 40%;
+    }
 }

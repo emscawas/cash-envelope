@@ -1,162 +1,181 @@
-@media (max-width: 768px) {
+.body {
+  height: 142px;
+}
+
+.budget-form {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.income-container,
+.percentage-container {
+  position: relative;
+  pointer-events: none;
+}
+
+.income-text {
+  color: black;
+  background-color: #d9d9d9;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #7cd689;
+  max-width: 150px;
+  border-radius: 5px;
+  text-align: right;
+}
+
+.income-text:not(:placeholder-shown)+.income-placeholder,
+.income-text:focus+.income-placeholder {
+  top: -10px;
+  font-size: 0.8rem;
+  background-color: #d9d9d9;
+  color: #7cd689;
+}
+
+.income-placeholder {
+  color: rgb(110, 110, 110);
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 0.9rem;
+  transition: ease-in-out 0.3s;
+  pointer-events: none;
+}
+
+.percentage-container::after {
+  color: black;
+  content: "%";
+  position: absolute;
+  font-size: 1.2rem;
+  right: 5px;
+  top: 5px;
+}
+
+.percentage-text {
+  color: black;
+  background-color: #d9d9d9;
+  padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #7cd689;
+  max-width: 150px;
+  border-radius: 5px;
+  text-align: right;
+}
+
+.percentage-placeholder {
+  color: rgb(110, 110, 110);
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 0.9rem;
+  transition: ease-in-out 0.3s;
+  pointer-events: none;
+}
+
+.percentage-text:not(:placeholder-shown)+.percentage-placeholder,
+.percentage-text:focus+.percentage-placeholder {
+  top: -10px;
+  font-size: 0.8rem;
+  background-color: #d9d9d9;
+  color: #7cd689;
+}
+
+.needs-total-budget,
+.total-remaining {
+  color: black;
+}
+
+.over-budget {
+  color: red;
+}
+
+.navigations {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+
+.navigations input {
+  background-color: #6ec57b;
+  color: white;
+  cursor: pointer;
+  border: none;
+  width: 3rem;
+}
+
+.prev-button {
+  border-radius: 10px 0 0 10px;
+}
+
+.next-button {
+  border-radius: 0 10px 10px 0;
+}
+
+.lists-tracker {
+  color: black;
+  height: 63vh;
+  width: 100vw;
+  display: flex;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0.5rem;
+}
+
+.dl-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
+}
+
+.total-texts {
+  display: flex;
+  flex-direction: row;
+  width: 55%;
+  color: black;
+}
+
+.total-labels {
+  white-space: nowrap;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.total-values {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+@media (min-width: 768px) {
   .body {
-    height: 142px;
-  }
-
-  .budget-form {
-    padding: 1rem;
+    height: 90vh;
+    border: 1px solid blue;
     display: flex;
-    justify-content: space-between;
-  }
-
-  .income-container,
-  .percentage-container {
-    position: relative;
-    pointer-events: none;
-  }
-
-  .income-text {
-    color: black;
-    background-color: #d9d9d9;
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    box-sizing: border-box;
-    outline: none;
-    border: 1px solid #7cd689;
-    max-width: 150px;
-    border-radius: 5px;
-    text-align: right;
-  }
-
-  .income-text:not(:placeholder-shown) + .income-placeholder,
-  .income-text:focus + .income-placeholder {
-    top: -10px;
-    font-size: 0.8rem;
-    background-color: #d9d9d9;
-    color: #7cd689;
-  }
-
-  .income-placeholder {
-    color: rgb(110, 110, 110);
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    font-size: 0.9rem;
-    transition: ease-in-out 0.3s;
-    pointer-events: none;
-  }
-
-  .percentage-container::after {
-    color: black;
-    content: "%";
-    position: absolute;
-    font-size: 1.2rem;
-    right: 5px;
-    top: 5px;
-  }
-
-  .percentage-text {
-    color: black;
-    background-color: #d9d9d9;
-    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
-    font-size: 1.2rem;
-    box-sizing: border-box;
-    outline: none;
-    border: 1px solid #7cd689;
-    max-width: 150px;
-    border-radius: 5px;
-    text-align: right;
-  }
-
-  .percentage-placeholder {
-    color: rgb(110, 110, 110);
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    font-size: 0.9rem;
-    transition: ease-in-out 0.3s;
-    pointer-events: none;
-  }
-
-  .percentage-text:not(:placeholder-shown)
-    + .percentage-placeholder,
-  .percentage-text:focus + .percentage-placeholder {
-    top: -10px;
-    font-size: 0.8rem;
-    background-color: #d9d9d9;
-    color: #7cd689;
-  }
-
-  .needs-total-budget,
-  .total-remaining {
-    color: black;
-  }
-
-  .over-budget {
-    color: red;
   }
 
   .navigations {
-    color: black;
+    display: none;
+  }
+
+  #slider {
     display: flex;
     justify-content: space-between;
-    padding: 0 0.5rem;
+    gap: 20px;
   }
 
-  .navigations input {
-    background-color: #6ec57b;
-    color: white;
-    cursor: pointer;
-    border: none;
-    width: 3rem;
-  }
-
-  .prev-button {
-    border-radius: 10px 0 0 10px;
-  }
-
-  .next-button {
-    border-radius: 0 10px 10px 0;
-  }
-
-  .lists-tracker {
-    color: black;
-    height: 63vh;
-    width: 100vw;
-    display: flex;
-  }
-
-  .footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 0.5rem;
-  }
-
-  .dl-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 45%;
-  }
-
-  .total-texts {
-    display: flex;
-    flex-direction: row;
-    width: 55%;
-    color: black;
-  }
-
-  .total-labels {
-    white-space: nowrap;
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .total-values {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+  #slider > * {
+    flex: 1;
   }
 }
