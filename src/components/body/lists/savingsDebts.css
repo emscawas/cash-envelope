@@ -262,3 +262,9 @@
     display: flex;
     width: 100%;
   }
+
+  @media (min-width: 768px) {
+    .sd-lists-container {
+      width: 50vw;
+    }
+  }

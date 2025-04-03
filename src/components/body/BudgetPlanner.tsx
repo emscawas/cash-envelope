@@ -51,9 +51,6 @@ function BudgetPlanner() {
   const [currentBudget, setCurrentBudget] = useState(0);
   const [list, setList] = useState<BudgetItems[]>([]);
   const [budgetsPercentages, setBudgetsPercentages] = useState(defaultPercentages);
-  const [isWideScreen, setIsWideScreen] = useState(
-    window.matchMedia("(min-width: 768px)").matches
-  );
 
   // testing context usage here
   const addToList = (
@@ -95,15 +92,6 @@ function BudgetPlanner() {
 
   useEffect(() => {
     setBudgetsPercentage(budgetsPercentages[currentBudget]);
-
-    const handleResize = () => {
-      setIsWideScreen(window.matchMedia("(min-width: 768px)").matches);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, [currentBudget, budgetsPercentages]);
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -269,10 +257,8 @@ function BudgetPlanner() {
         </div>
         <Divider pixel="3" />
         {/* component for list of budgets allocated */}
-        <div className="lists-tracker" id="slider">
-          {isWideScreen
-            ? budgetPlannerBody // Display all components side by side
-            : budgetPlannerBody[currentBudget]} {/* Display one component at a time */}
+        <div className="lists-tracker">
+         {budgetPlannerBody[currentBudget]}
         </div>
         <Divider pixel="3" />
         {/* component for footer */}

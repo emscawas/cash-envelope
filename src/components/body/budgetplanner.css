@@ -11,6 +11,9 @@
 .income-container,
 .percentage-container {
   position: relative;
+}
+
+.percentage-container {
   pointer-events: none;
 }
 
@@ -160,22 +163,12 @@
 
 @media (min-width: 768px) {
   .body {
+    width: 50vw;
     height: 90vh;
-    border: 1px solid blue;
-    display: flex;
+    transform: translateX(50%);
+    box-shadow: 1px 16px 30px 0px rgba(0,0,0,0.75);
   }
-
-  .navigations {
-    display: none;
-  }
-
-  #slider {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  #slider > * {
-    flex: 1;
+  .lists-tracker {
+    width: 50vw;
   }
 }
