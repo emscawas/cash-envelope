@@ -211,6 +211,21 @@ function BudgetPlanner() {
     );
   };
 
+  const generatePayloadForAPI = () => {
+    const needsList = list.filter((list) => list.parentIndex === 0).map(({id,  parentIndex, ...rest }) => rest);
+    const wantsList = list.filter((list) => list.parentIndex === 1).map(({ id, parentIndex, ...rest }) => rest);
+    const savingsdebtsList = list.filter((list) => list.parentIndex === 2).map(({ id, parentIndex, ...rest }) => rest);
+
+    const params = {
+      income: Number(income.replace(/,/g, "")),
+      needs_list: [needsList],
+      wants_list: [wantsList],
+      savings_debts_list: [savingsdebtsList]
+    }
+
+    return (params)
+  }
+
   return (
     <BudgetContext.Provider value={contextValue}>
       <div className="body">
@@ -263,7 +278,14 @@ function BudgetPlanner() {
         <Divider pixel="3" />
         {/* component for footer */}
         <div className="footer">
-          <div className="dl-buttons"></div>
+          <div className="dl-buttons">
+            <input
+              type="button"
+              className="btn-download-excel"
+              value="XLSX"
+              onClick={() => generatePayloadForAPI()}
+            />
+          </div>
           <div className="total-texts">
             <div className="total-labels">
               <span className="total-needs">{budgetsPercentage}% of {title(currentBudget)}:</span>
