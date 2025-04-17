@@ -47,7 +47,6 @@ function BudgetPlanner() {
   const defaultPercentages = ["50", "30", "20"];
   const [income, setIncome] = useState("");
   const [budgetsPercentage, setBudgetsPercentage] = useState(defaultPercentages[0]);
-  // const [totalActual, setTotalActual] = useState(0);
   const [currentBudget, setCurrentBudget] = useState(0);
   const [list, setList] = useState<BudgetItems[]>([]);
   const [budgetsPercentages, setBudgetsPercentages] = useState(defaultPercentages);
@@ -102,7 +101,7 @@ function BudgetPlanner() {
 
     const elements = document.querySelectorAll(".needs-total-budget");
     elements.forEach((element) => {
-      Number(value) > Number(totalActual)
+      Number(value) > handleTotalActualChangeV2()
         ? element?.classList.remove("over-budget")
         : element?.classList.add("over-budget");
     });
