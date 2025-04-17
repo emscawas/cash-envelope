@@ -47,7 +47,7 @@ function BudgetPlanner() {
   const defaultPercentages = ["50", "30", "20"];
   const [income, setIncome] = useState("");
   const [budgetsPercentage, setBudgetsPercentage] = useState(defaultPercentages[0]);
-  const [totalActual, setTotalActual] = useState(0);
+  // const [totalActual, setTotalActual] = useState(0);
   const [currentBudget, setCurrentBudget] = useState(0);
   const [list, setList] = useState<BudgetItems[]>([]);
   const [budgetsPercentages, setBudgetsPercentages] = useState(defaultPercentages);
